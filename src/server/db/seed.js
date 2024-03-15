@@ -1,5 +1,6 @@
 const db = require('./client');
 const { createUser } = require('./users');
+const { createShoe } = require('./shoes');
 
 const users = [
   {
@@ -29,11 +30,22 @@ const users = [
   },
   // Add more user objects as needed
 ];  
-
+const shoes = [
+  {
+    name: 'Travis Scott x Air Jordan 1 Low Mocha',
+    brand: 'Jordan',
+    size: '10.5',
+    imageUrl: 'https://www.aj1classic.ru/65001-large_default/travis-scott-x-air-jordan-1-low-mocha-cq4277-001-brown.jpg',
+    price: '1640'
+  }
+];
 const dropTables = async () => {
     try {
         await db.query(`
         DROP TABLE IF EXISTS users;
+        `)
+        await db.query(`
+        DROP TABLE IF EXISTS shoes;
         `)
     }
     catch(err) {
@@ -50,6 +62,17 @@ const createTables = async () => {
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL
         )`)
+        await db.query(`
+        CREATE TABLE shoes(
+          id SERIAL PRIMARY KEY,
+          name TEXT,
+          brand TEXT,
+          size DECIMAL (3, 1),
+          imageUrl TEXT,
+          price DECIMAL (10, 2)
+        )
+        
+        `)
     }
     catch(err) {
         throw err;
@@ -67,12 +90,24 @@ const insertUsers = async () => {
   }
 };
 
+const insertShoes = async () => {
+  try {
+    for (const shoe of shoes) {
+      await createShoe({name: shoe.name, brand: shoe.brand, size: shoe.size, imageUrl: shoe.imageUrl, price: shoe.price});
+    }
+    console.log('Seed data inserted successfully.');
+  } catch (error) {
+    console.error('Error inserting seed data:', error);
+  }
+};
+
 const seedDatabse = async () => {
     try {
         db.connect();
         await dropTables();
         await createTables();
         await insertUsers();
+        await insertShoes();
     }
     catch (err) {
         throw err;
