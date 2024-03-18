@@ -8,10 +8,19 @@ shoeRouter.get('/', async (req, res, next) => {
   try {
     const shoes = await getAllShoes();
     res.send(shoes);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 });
+
+shoeRouter.post('/', async (req, res, next) => {
+  try {
+    await db.insertShoe(req.body);
+    res.status(201).send('Shoe added successfully');
+  } catch (err) {
+    next(err);
+  }
+  });
 
 shoeRouter.get('/:name', async (req, res, next) => {
   try {
@@ -22,8 +31,8 @@ shoeRouter.get('/:name', async (req, res, next) => {
     } else {
       res.send(shoe);
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 });
 

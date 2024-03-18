@@ -4,11 +4,11 @@ const db = require('./client');
 
 async function getAllShoes() {
   try {
-    const { rows } = await db.query('SELECT * FROM shoes');
+    const { rows } = await db.query(`SELECT * FROM shoes`);
     return rows;
-  } catch (error) {
+  } catch (err) {
     console.error('Error fetching shoes:', error);
-    throw error;
+    throw err;
   }
 }
 
@@ -22,20 +22,17 @@ async function getShoeByName(name) {
   }
 }
 
-async function createShoe(shoeData) {
+const createShoe = async ({ name, brand, size, imageUrl, price }) => {
   try {
-    const { name, brand, size, imageUrl, price } = shoeData;
-    const query = `
+    const { rows: [shoe ]} = await db.query(`
       INSERT INTO shoes (name, brand, size, imageUrl, price)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING *;
-    `;
-    const values = [name, brand, size, imageUrl, price];
-    const { rows } = await db.query(query, values);
-    return rows[0];
-  } catch (error) {
-    console.error('Error creating shoe:', error);
-    throw error;
+      RETURNING *;`, [ name, brand, size, imageUrl, price ]);
+
+      return shoe;
+  } catch (err) {
+    console.error('Error creating shoe:', err);
+    throw err;
   }
 }
 
