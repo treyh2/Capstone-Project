@@ -1,7 +1,7 @@
 // src/server/api/shoes.js
 const express = require('express');
 const shoeRouter = express.Router();
-const { getAllShoes, getShoeByName } = require('../db/shoes');
+const { getAllShoes, getShoeByName, createShoe } = require('../db/shoes');
 
 // /api/shoes routes
 shoeRouter.get('/', async (req, res, next) => {
@@ -13,14 +13,11 @@ shoeRouter.get('/', async (req, res, next) => {
   }
 });
 
-shoeRouter.post('/', async (req, res, next) => {
-  try {
-    await db.insertShoe(req.body);
-    res.status(201).send('Shoe added successfully');
-  } catch (err) {
-    next(err);
-  }
-  });
+shoeRouter.post('/', async (req, res) => {
+  const shoe = await createShoe(req.body)
+  console.log('req.body')
+  res.send(shoe);
+});
 
 shoeRouter.get('/:name', async (req, res, next) => {
   try {
@@ -33,7 +30,8 @@ shoeRouter.get('/:name', async (req, res, next) => {
     }
   } catch (err) {
     next(err);
-  }
-});
+  }  
+});  
 
 module.exports = shoeRouter;
+

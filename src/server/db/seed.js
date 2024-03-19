@@ -32,6 +32,7 @@ const users = [
 ];  
 const shoes = [
   {
+    id: '1',
     name: 'Travis Scott x Air Jordan 1 Low Mocha',
     brand: 'Jordan',
     size: '10.5',
@@ -58,7 +59,7 @@ const createTables = async () => {
         await db.query(`
         CREATE TABLE users(
             id SERIAL PRIMARY KEY,
-            name VARCHAR(255) DEFAULT 'name',
+            name VARCHAR(255) DEFAULT 'name', 
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL
         )`)
@@ -68,7 +69,7 @@ const createTables = async () => {
           name TEXT,
           brand TEXT,
           size DECIMAL (3, 1),
-          imageUrl TEXT,
+          "imageUrl" TEXT,
           price DECIMAL (10, 2)
         )
         
@@ -93,13 +94,13 @@ const insertUsers = async () => {
 const insertShoes = async () => {
   try {
     for (const shoe of shoes) {
-      await createShoe({name: shoe.name, brand: shoe.brand, size: shoe.size, imageUrl: shoe.imageUrl, price: shoe.price});
+      await createShoe({id: shoe.id, name: shoe.name, brand: shoe.brand, size: shoe.size, imageUrl: shoe.imageUrl, price: shoe.price})
     }
-    console.log('Seed data inserted successfully.');
+    console.log('Seeded shoes successfully');
   } catch (error) {
-    console.error('Error inserting seed data:', error);
+    console.error('Error inserting seeded data', error)
   }
-};
+}
 
 const seedDatabse = async () => {
     try {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import '../styles/Catalog.css';
 
 function Catalog() {
   const [shoes, setShoes] = useState([]);
@@ -9,38 +10,48 @@ function Catalog() {
     async function fetchShoes() {
       try {
         const { data } = await axios.get('/api/shoes');
-        // Ensure that data is an array before setting the state
         if (Array.isArray(data)) {
           setShoes(data);
         } else {
           console.error('Invalid data format for shoes:', data);
+          setShoes([]);
         }
       } catch (error) {
         console.error('Error fetching shoes:', error);
-        // Handle error state here, such as setting an empty array or showing an error message
         setShoes([]);
       }
     }
-
+  
     fetchShoes();
   }, []);
-
-console.log({ shoes })
-
+  
   return (
-    <div className="shoes-container">
-      <h1>Shoes:</h1>
-      {shoes.map(shoe => (
-        <div key={shoe.id} className="shoe">
-          <Link to={`/${shoe.name}`}>
-            <img src={shoe.imageUrl} alt={shoe.name} />
-            <h2>{shoe.name}</h2>
-            <p>Price: ${shoe.price}</p>
-          </Link>
+    <div className="catalog-container">
+      <header className="header">
+        <div className="navbar">
+          <NavLink to='/home'>Home</NavLink>
+          <NavLink to='/catalog'>Catalog</NavLink>
+          <NavLink to='/login'>Login</NavLink>
         </div>
-      ))}
+      </header>
+      <div className="shoes-container">
+        <h1 className="title">Explore Our Collection</h1>
+        <div className="shoes-grid">
+          {shoes.map(shoe => (
+            <div key={shoe.id} className="shoe-card">
+              <Link to={`/${shoe.name}`} className="shoe-link">
+                <img src={shoe.imageUrl} alt={shoe.name} className='shoe-img'/>
+                <div className="shoe-info">
+                  <h2 className="shoe-name">{shoe.name}</h2>
+                  <p className="shoe-price">Price: ${shoe.price}</p>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-export default Catalog
+export default Catalog;
