@@ -25,6 +25,7 @@
   background-color: #222;
   color: #fff;
   padding: 1rem;
+  margin-bottom: 20px; /* Add margin-bottom to NavBar */
 }
 
 .NavBar a {

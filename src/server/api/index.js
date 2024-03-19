@@ -1,26 +1,37 @@
-// src/server/api/index.js
 const express = require('express');
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
-
 const volleyball = require('volleyball');
+
+// Importing routers
+const usersRouter = require('./users');
+const shoesRouter = require('./shoes');
+
 apiRouter.use(volleyball);
 
-// Authentication middleware
 apiRouter.use(async (req, res, next) => {
   const auth = req.header('Authorization');
   
   if (!auth) { 
     next();
   } 
-  else if (auth.startsWith('Bearer')) {
-    const token = auth.substring(7); // Remove 'Bearer ' prefix
+  else if (auth.startsWith('Bearer')) { // Corrected token type check
+    // Extracting token from Authorization header
+    const token = auth.split(' ')[1]; // Extract token after 'Bearer'
+
     try {
-      const decoded = jwt.verify(token, 'your_secret_key_here'); // Verify the token
-      req.user = decoded; // Set req.user with decoded token data
-      next(); // Move to the next middleware
+      // Verifying the token
+      const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY'); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+
+      // Assuming token payload contains user id
+      const userId = decodedToken.id;
+
+      // Set req.user with user id
+      req.user = userId;
+      
+      next();
     } catch (error) {
-      next(error); // Pass error to the error handling middleware
+      next(error);
     }
   } 
   else {
@@ -31,12 +42,9 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-// Import routes for users
-const usersRouter = require('./users');
+// Mounting routers
 apiRouter.use('/users', usersRouter);
-
-const shoeRouter = require('./shoes');
-apiRouter.use('/shoes', shoeRouter)
+apiRouter.use('/shoes', shoesRouter);
 
 // Error handling middleware
 apiRouter.use((err, req, res, next) => {
