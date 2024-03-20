@@ -21,8 +21,8 @@ apiRouter.use(async (req, res, next) => {
 
     try {
       // Verifying the token
-      const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY'); // Replace 'YOUR_SECRET_KEY' with your actual secret key
-
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+      console.log('decoded token:', decodedToken)
       // Assuming token payload contains user id
       const userId = decodedToken.id;
 
@@ -31,6 +31,7 @@ apiRouter.use(async (req, res, next) => {
       
       next();
     } catch (error) {
+      console.error('JWT VERIFICATION ERROR', error)
       next(error);
     }
   } 
