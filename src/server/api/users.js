@@ -4,12 +4,23 @@ const usersRouter = express.Router();
 const {
     createUser,
     getUser,
-    getUserByEmail
-} = require('../db');
+    getUserByEmail,
+    getAllUsers
+} = require('../db/users');
 
 const jwt = require('jsonwebtoken')
 
 console.log('JWT SECRET KEY:', process.env.JWT_SECRET);
+
+usersRouter.get('/', async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 usersRouter.get('/', async( req, res, next) => {
     try {
