@@ -4,41 +4,66 @@ const { createShoe } = require('./shoes');
 
 const users = [
   {
-    name: 'Emily Johnson',
+    firstname: 'Emily',
+    lastname: 'Johnson',
     email: 'emily@example.com',
     password: 'securepass',
-  },
-  {
-    name: 'Liu Wei',
-    email: 'liu@example.com',
-    password: 'strongpass',
-  },
-  {
-    name: 'Isabella García',
-    email: 'bella@example.com',
-    password: 'pass1234',
-  },
-  {
-    name: 'Mohammed Ahmed',
-    email: 'mohammed@example.com',
-    password: 'mysecretpassword',
-  },
-  {
-    name: 'John Smith',
-    email: 'john@example.com',
-    password: 'password123',
-  },
+    address: '123 Home',
+    city: 'Detroit',
+    state: 'Michigan',
+    zipcode: '12345',
+  }
   // Add more user objects as needed
 ];  
 const shoes = [
   {
     id: '1',
-    name: 'Travis Scott x Air Jordan 1 Low Mocha',
-    brand: 'Jordan',
+    name: 'Jordan 11 Retro Low Concord Bred',
+    brand: 'Air Jordan',
     size: '10.5',
-    imageUrl: 'https://www.aj1classic.ru/65001-large_default/travis-scott-x-air-jordan-1-low-mocha-cq4277-001-brown.jpg',
-    price: '1640'
-  }
+    imageUrl: 'https://stockx.imgix.net/images/Air-Jordan-11-Retro-Low-Concord-Bred-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606324216',
+    price: '280'
+  },
+  {
+    "id": 2,
+    "name": "Jordan 5 Retro UNC University Blue",
+    "brand": "Air Jordan",
+    "size": "11.0",
+    "imageUrl": "https://th.bing.com/th/id/OIP.PIoBq7D_xjzZF5K-ZMIHuwAAAA?rs=1&pid=ImgDetMain",
+    "price": "215.00"
+},
+{
+    "id": 3,
+    "name": "Drake NOCTA Air Force 1",
+    "brand": "Nike",
+    "size": "10.0",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/0270/5326/0848/products/Nike-Air-Force-1-Low-Drake-Certified-Lover-Boy-Product.webp?v=1669981556",
+    "price": "210.00"
+},
+{
+    "id": 4,
+    "name": "Jordan 1 Retro Low Golf Travis Scott",
+    "brand": "Air Jordan",
+    "size": "10.0",
+    "imageUrl": "https://stockx.imgix.net/images/Air-Jordan-1-Retro-Low-Travis-Scott-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606317345",
+    "price": "950.00"
+},
+{
+  "id": 5,
+  "name": "Jordan 4 Retro Military Black",
+  "brand": "Air Jordan",
+  "size": "11.5",
+  "imageUrl": "https://i.pinimg.com/originals/bf/f3/b4/bff3b4518efde82c67d3cc013d2bf75b.png",
+  "price": "420.00"
+},
+{
+  "id": 6,
+  "name": "Jordan 11 Retro Playoffs Bred",
+  "brand": "Air Jordan",
+  "size": "11",
+  "imageUrl": "https://stockx.imgix.net/images/Air-Jordan-11-Retro-Playoffs-2019-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606320266",
+  "price": "300.00"
+}
 ];
 const dropTables = async () => {
     try {
@@ -58,10 +83,17 @@ const createTables = async () => {
     try{
         await db.query(`
         CREATE TABLE users(
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(255) DEFAULT 'name', 
-            email VARCHAR(255) UNIQUE NOT NULL,
-            password VARCHAR(255) NOT NULL
+          id SERIAL PRIMARY KEY,
+          firstName VARCHAR(50) DEFAULT 'firstname',
+          lastName VARCHAR(50) DEFAULT 'lastname',
+          email VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          address TEXT NOT NULL,
+          city VARCHAR(255) NOT NULL,
+          state VARCHAR(50) NOT NULL,
+          zipcode VARCHAR(5) NOT NULL,
+          userCart TEXT,
+          pastOrders TEXT
         )`)
         await db.query(`
         CREATE TABLE shoes(
@@ -83,9 +115,18 @@ const createTables = async () => {
 const insertUsers = async () => {
   try {
     for (const user of users) {
-      await createUser({name: user.name, email: user.email, password: user.password});
+      await createUser({
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        password: user.password,
+        address: user.address,
+        city: user.city,
+        state: user.state,
+        zipcode: user.zipcode,
+      });
+      console.log('User seed data inserted successfully.');
     }
-    console.log('Seed data inserted successfully.');
   } catch (error) {
     console.error('Error inserting seed data:', error);
   }

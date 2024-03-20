@@ -1,7 +1,6 @@
-// Login.jsx
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import "../styles/Login.css";
+import { Link, NavLink } from 'react-router-dom'; // Import Link from react-router-dom
+import '../styles/Login.css'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,37 +17,25 @@ const Login = () => {
 
   const login = async() => {
     try {
-      const response = await fetch('http://localhost:3000/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type' : 'application/json'
-        }, 
-        body: JSON.stringify({
-          email,
-          password
-        })
-      });
-     
-      if (!response.ok) {
-        let errorMessage = 'An error occurred. Please try again.';
-        try {
-          const errorData = await response.json();
-          if (errorData && errorData.message) {
-            errorMessage = errorData.message;
-          }
-        } catch (error) {
-          console.error('Error parsing error response:', error);
+        const response = await fetch('http://localhost:3000/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            }, 
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+        const result = await response.json();
+        setMessage(result.message);
+        if(!response.ok) {
+          throw(result)
         }
-        throw new Error(errorMessage);
-      }
-
-      const result = await response.json();
-      setMessage(result.message);
-      setEmail('');
-      setPassword('');
+        setEmail('');
+        setPassword('');
     } catch (err) {
-      console.error('Error:', err);
-      setMessage(err.message)
+        console.error(`${err.name}: ${err.message}`);
     }
   };
 
@@ -58,17 +45,15 @@ const Login = () => {
   };
 
   return (
-    <>
-    <header>
-        <nav>
-          <div className='NavBar'>
-            <NavLink to='/home'>Home</NavLink>
-            <NavLink to='/catalog'>Catalog</NavLink>
-            <NavLink to='/login'>Login</NavLink>
-          </div>
-        </nav>
+    <div className='login-container'>
+      <header className='header'>
+        <div className='navbar'>
+          <NavLink to ='/home'>Home</NavLink>
+          <NavLink to ='/catalog'>Catalog</NavLink>
+          <NavLink to ='/login'>Login</NavLink>
+        </div>
       </header>
-    <div className="Login-container">
+      <div className='login-box'>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -94,8 +79,10 @@ const Login = () => {
         <button type='submit'>Login</button>
       </form>
       <p>{message}</p>
+      {/* Add a Link to the registration page */}
+      <Link to="/register">Register</Link>
     </div>
-    </>
+    </div>
   );
 };
 

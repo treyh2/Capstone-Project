@@ -5,24 +5,22 @@ import '../styles/Home.css'; // Import CSS file for styling
 
 function Home() {
   return (
-    <>
-    <header>
-        <nav>
-          <div className='NavBar'>
+    <div className = 'home-container'>
+    <header className='header'>
+          <div className='navbar'>
             <NavLink to='/home'>Home</NavLink>
             <NavLink to='/catalog'>Catalog</NavLink>
             <NavLink to='/login'>Login</NavLink>
           </div>
-        </nav>
       </header>
-    <div className="home-container">
+    <div className="home-box">
       <img src="/kicks.jpeg" alt="kicks" className="home-image" />
       <div className="home-content">
-        <h1>Welcome to Our Sneaker Store!</h1>
+        <h1>Welcome to Kicks</h1>
         <p>Explore our latest collection of sneakers.</p>
       </div>
     </div>
-    </>
+    </div>
   );
 }
 

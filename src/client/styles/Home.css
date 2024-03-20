@@ -1,42 +1,32 @@
 /* Home.css */
 .home-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+  height: 100vh;
 }
-
-.home-image {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
 }
-
-.home-content {
-  max-width: 600px;
-}
-
-.NavBar {
+.navbar{
   display: flex;
   justify-content: space-between;
+}
+
+.home-box{
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  background-color: #222;
-  color: #fff;
-  padding: 1rem;
-  margin-bottom: 20px; /* Add margin-bottom to NavBar */
 }
 
-.NavBar a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
+.home-content{
+  margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
-
-.NavBar a:hover {
-  background-color: #444;
-}
-
-
-

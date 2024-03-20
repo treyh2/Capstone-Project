@@ -55,10 +55,14 @@
   height: auto;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+
 }
 
 .shoe-info {
+  display: flex;
   padding: 15px;
+  margin-top: 10vh;
+  flex-direction: column
 }
 
 .shoe-name {

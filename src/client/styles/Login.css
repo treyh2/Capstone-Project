@@ -1,47 +1,69 @@
 /* Login.css */
-.Login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.login-container {
+  font-family: 'Arial', sans-serif;
   background-color: #f9f9f9;
-}
+  padding: 20px;
+  height: 100vh;
 
-.Login-container h2 {
+}
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+}
+.navbar{
+  display: flex;
+  justify-content: space-between;
+}
+.login-container h2 {
   text-align: center;
 }
 
-.Login-container form {
+.login-container form {
   display: flex;
   flex-direction: column;
 }
 
-.Login-container label {
+.login-container label {
   margin-bottom: 0.5rem;
 }
 
-.Login-container input {
+.login-container input {
+  display: flex;
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  justify-content: space-between;
+  height: 1vh;
+
 }
 
-.Login-container button {
+.login-container button {
+  max-width: 480px;
   padding: 0.5rem;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  align-items: center;
+  height: 5vh;
+  justify-content: center;
+  
 }
 
-.Login-container button:hover {
+.login-container button:hover {
   background-color: #0056b3;
 }
 
-.Login-container p {
+.login-container p {
   margin-top: 1rem;
   color: #dc3545;
+}
+.login-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
