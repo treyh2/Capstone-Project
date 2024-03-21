@@ -8,7 +8,7 @@ function Home() {
     <div className = 'home-container'>
     <header className='header'>
           <div className='navbar'>
-            <NavLink to='/home'>Home</NavLink>
+            <NavLink to='/'>Home</NavLink>
             <NavLink to='/catalog'>Catalog</NavLink>
             <NavLink to='/login'>Login</NavLink>
           </div>

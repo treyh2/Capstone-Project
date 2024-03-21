@@ -29,7 +29,7 @@ function Catalog() {
     <div className="catalog-container">
       <header className="header">
         <div className="navbar">
-          <NavLink to='/home'>Home</NavLink>
+          <NavLink to='/'>Home</NavLink>
           <NavLink to='/catalog'>Catalog</NavLink>
           <NavLink to='/login'>Login</NavLink>
         </div>
@@ -39,7 +39,7 @@ function Catalog() {
         <div className="shoes-grid">
           {shoes.map(shoe => (
             <div key={shoe.id} className="shoe-card">
-              <Link to={`/${shoe.name}`} className="shoe-link">
+              <Link to={`/shoe/${encodeURIComponent(shoe.name)}`} className="shoe-link">
                 <img src={shoe.imageUrl} alt={shoe.name} className='shoe-img'/>
                 <div className="shoe-info">
                   <h2 className="shoe-name">{shoe.name}</h2>
