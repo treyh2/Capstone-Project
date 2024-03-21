@@ -1,3 +1,4 @@
+// src/server/api/index.js
 const express = require('express');
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');

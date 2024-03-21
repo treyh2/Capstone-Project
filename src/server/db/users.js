@@ -1,4 +1,6 @@
-const db = require('./client')
+// src/server/db/users.js
+
+const db = require('./client');
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
 
@@ -78,9 +80,37 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const addToUserCart = async (userId, shoeId, size) => {
+  try {
+    // Check if the user already has a cart
+    const { rows: [existingCart] } = await db.query(
+      `SELECT * FROM users WHERE id = $1`,
+      [userId]
+    );
+
+    // If the user doesn't have a cart yet, create one
+    if (!existingCart.userCart) {
+      await db.query(
+        `UPDATE users SET userCart = $1 WHERE id = $2`,
+        [[{ shoeId, size }], userId]
+      );
+    } else {
+      // If the user already has a cart, append the new item to the existing cart
+      const updatedCart = [...existingCart.userCart, { shoeId, size }];
+      await db.query(
+        `UPDATE users SET userCart = $1 WHERE id = $2`,
+        [updatedCart, userId]
+      );
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
-    createUser,
-    getUser,
-    getUserByEmail,
-    getAllUsers
+  createUser,
+  getUser,
+  getUserByEmail,
+  getAllUsers,
+  addToUserCart
 };
