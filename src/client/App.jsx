@@ -16,7 +16,7 @@ function App() {
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await axios.get('/api/users/current', {
+      const response = await axios.get('/api/users/current-user', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -53,7 +53,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login setToken={handleLogin} />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/shoe/:name' element={<ShoeDetails currentUser={currentUser} />} />
+        <Route path='/shoe/:name' element={<ShoeDetails token={token} />} />
         <Route path='/cart' element={<Cart currentUser={currentUser} />} />
       </Routes>
     </>

@@ -20,16 +20,8 @@ usersRouter.get('/', async (req, res, next) => {
 });
 
 
-usersRouter.get('/', async( req, res, next) => {
-    try {
-        const users = await getUser();
-
-        res.send({
-            users
-        });
-    } catch ({name, message}) {
-        next({name, message})
-    }
+usersRouter.get('/current-user', async( req, res, next) => {
+    res.send(req.user)
 });
 
 usersRouter.post('/login', async(req, res, next) => {

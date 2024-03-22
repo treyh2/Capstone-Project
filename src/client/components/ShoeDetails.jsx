@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function ShoeDetails({ currentUser }) {
+function ShoeDetails({ token }) {
   const { name } = useParams();
   const navigate = useNavigate();
   const [shoe, setShoe] = useState(null);
@@ -30,7 +30,7 @@ function ShoeDetails({ currentUser }) {
       return;
     }
     console.log('Shoe Object:', shoe)
-    if (!currentUser) {
+    if (!token) {
       setError('Please log in to add items to your cart');
       return;
     }
@@ -50,9 +50,13 @@ function ShoeDetails({ currentUser }) {
       };
   
       const addToCartResponse = await axios.post('/api/cart/add', {
-        userId: currentUser.id,
         shoe: shoeToAdd,
         quantity: 1,
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
   
       console.log('Response:', addToCartResponse.data);
