@@ -1,5 +1,3 @@
-// src/server/db/users.js
-
 const db = require('./client');
 const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
@@ -82,22 +80,17 @@ const getUserByEmail = async (email) => {
 
 const addToUserCart = async (userId, shoeId, size, quantity, price) => {
   try {
-    // Fetch user's existing cart
     const { rows: [user] } = await db.query('SELECT * FROM users WHERE id = $1', [userId]);
     let updatedCart = [];
 
-    // If the user exists and has an existing cart, parse it
     if (user && user.userCart) {
       updatedCart = JSON.parse(user.userCart);
     }
 
-    // Add the new item to the cart
     updatedCart.push({ shoeId, size, quantity, price });
 
-    // Calculate total price
     const totalPrice = updatedCart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-    // Update user's cart and total price in the database
     await db.query('UPDATE users SET userCart = $1, cartTotalPrice = $2 WHERE id = $3', [JSON.stringify(updatedCart), totalPrice, userId]);
 
   } catch (error) {

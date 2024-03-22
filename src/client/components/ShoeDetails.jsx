@@ -1,4 +1,3 @@
-//src/client/components/ShoeDetails.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -42,12 +41,17 @@ function ShoeDetails({ currentUser }) {
     }
   
     try {
-      // Add item to cart using the shoe ID
+      const shoeToAdd = {
+        id: shoe.id,
+        name: shoe.name,
+        imageUrl: shoe.imageUrl,
+        price: shoe.price,
+        size: selectedSize,
+      };
+  
       const addToCartResponse = await axios.post('/api/cart/add', {
         userId: currentUser.id,
-        shoeId: shoe.id, // Use shoe.id as the shoeId
-        size: selectedSize,
-        price: shoe.price,
+        shoe: shoeToAdd,
         quantity: 1,
       });
   
@@ -59,7 +63,6 @@ function ShoeDetails({ currentUser }) {
     }
   };
   
-
   const handleSizeChange = (e) => {
     setSelectedSize(e.target.value);
   };
@@ -84,8 +87,9 @@ function ShoeDetails({ currentUser }) {
       <div className="single-shoe-container">
         <h1>{shoe.name}</h1>
         <img src={shoe.imageUrl} alt={shoe.name} />
-        <p>Brand: {shoe.brand}</p>
-        <p>Price: ${shoe.price}</p>
+        <p>{shoe.name}</p>
+        <p>{shoe.brand}</p>
+        <p>${shoe.price}</p>
         <select value={selectedSize} onChange={handleSizeChange}>
           <option value=''>Select Size</option>
           {shoe.sizes && shoe.sizes.map((size) => (

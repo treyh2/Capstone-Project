@@ -1,4 +1,3 @@
-//src/server/api/users.js
 const express = require('express')
 const usersRouter = express.Router();
 
@@ -6,12 +5,10 @@ const {
     createUser,
     getUser,
     getUserByEmail,
-    getAllUsers
+    getAllUsers,
 } = require('../db/users');
 
 const jwt = require('jsonwebtoken')
-
-console.log('JWT SECRET KEY:', process.env.JWT_SECRET);
 
 usersRouter.get('/', async (req, res, next) => {
   try {
@@ -109,5 +106,6 @@ usersRouter.post('/register', async(req, res, next) => {
         next({name, message})
     }
 })
+
 
 module.exports = usersRouter;

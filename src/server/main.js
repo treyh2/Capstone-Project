@@ -5,9 +5,8 @@ const router = require('vite-express');
 const app = express();
 
 const bodyParser = require('body-parser');
-const morgan = require('morgan'); // Import Morgan
+const morgan = require('morgan'); 
 
-// Use Morgan middleware for logging
 app.use(morgan('dev'));
 
 app.use(bodyParser.json());

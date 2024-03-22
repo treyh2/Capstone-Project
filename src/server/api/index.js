@@ -1,4 +1,3 @@
-// src/server/api/index.js
 const express = require('express');
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
@@ -23,8 +22,8 @@ apiRouter.use(async (req, res, next) => {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       console.log('decoded token:', decodedToken)
       
-      req.user = decodedToken; // Assign the entire decoded token object to req.user
-      console.log('req.user:', req.user); // Add this line to ensure req.user is populated
+      req.user = decodedToken; 
+      console.log('req.user:', req.user); 
       
       next();
     } catch (error) {

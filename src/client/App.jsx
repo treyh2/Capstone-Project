@@ -14,7 +14,6 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Function to fetch current user information
   const fetchCurrentUser = async () => {
     try {
       const response = await axios.get('/api/users/current', {
@@ -25,14 +24,12 @@ function App() {
       setCurrentUser(response.data);
     } catch (error) {
       console.error('Error fetching current user:', error);
-      // If there's an error fetching user data, clear token and current user
       setToken(null);
       setCurrentUser(null);
-      localStorage.removeItem('token'); // Remove token from localStorage
+      localStorage.removeItem('token');
     }
   };
 
-  // Fetch current user information when token changes
   useEffect(() => {
     if (token) {
       fetchCurrentUser();
@@ -41,18 +38,13 @@ function App() {
     }
   }, [token]);
 
-  // Function to handle successful login
   const handleLogin = (newToken) => {
     setToken(newToken);
-    localStorage.setItem('token', newToken); // Store token in localStorage
+    localStorage.setItem('token', newToken); 
   };
 
   // Function to handle logout
-  const handleLogout = () => {
-    setToken(null);
-    setCurrentUser(null);
-    localStorage.removeItem('token'); // Remove token from localStorage
-  };
+  
 
   return (
     <>
@@ -61,10 +53,8 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login setToken={handleLogin} />} />
         <Route path='/register' element={<Register />} />
-        {/* Pass currentUser as a prop to ShoeDetails */}
         <Route path='/shoe/:name' element={<ShoeDetails currentUser={currentUser} />} />
         <Route path='/cart' element={<Cart currentUser={currentUser} />} />
-        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </>
   );

@@ -1,9 +1,7 @@
-// src/server/api/shoes.js
 const express = require('express');
 const shoeRouter = express.Router();
-const { getAllShoes, getShoeByName, createShoe } = require('../db/shoes');
+const { getAllShoes, getShoeByName, createShoe, getShoeById } = require('../db/shoes');
 
-// /api/shoes routes
 shoeRouter.get('/', async (req, res, next) => {
   try {
     const shoes = await getAllShoes();
@@ -32,6 +30,20 @@ shoeRouter.get('/:name', async (req, res, next) => {
     next(err);
   }  
 });  
+
+shoeRouter.get('/id/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const shoe = await getShoeById(id);
+    if (!shoe) {
+      res.status(404).send('No shoe found.');
+    } else {
+      res.send(shoe);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = shoeRouter;
 

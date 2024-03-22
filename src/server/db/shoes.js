@@ -1,5 +1,3 @@
-// src/server/db/shoes.js
-
 const db = require('./client');
 
 async function getAllShoes() {

@@ -1,68 +1,42 @@
-//src/server/db/cart.js
-const db = require("./client");
+const db = require('./client');
+const { getShoeById } = require('./shoes');
+const { addToUserCart } = require('./users')
 
-// Modify getAllCart function to accept userId parameter and filter cart items
-async function getAllCart(userId) {
-  try {
-    const { rows } = await db.query("SELECT * FROM cart WHERE user_id = $1", [userId]);
-    return rows;
-  } catch (error) {
-    throw error;
-  }
-}
-
-
-async function addToCart(userId, shoeId, size, price, quantity) {
-  try {
-    // Insert the item into the cart table
-    await db.query(
-      `INSERT INTO cart (user_id, shoe_id, size, price, quantity)
-      VALUES ($1, $2, $3, $4, $5)`,
-      [userId, shoeId, size, price, quantity]
-    );
-
-    // Fetch the inserted item from the cart table
-    const { rows } = await db.query(
-      `SELECT * FROM cart WHERE user_id = $1 AND shoe_id = $2 AND size = $3`,
-      [userId, shoeId, size]
-    );
-
-    return rows[0]; // Return the inserted item
-  } catch (err) {
-    throw err;
-  }
-}
-
-
-async function updateCartItem(cartItemId, quantity) {
+async function addToCart(userId, shoeId, name, imageUrl, size, price, quantity) {
   try {
     const { rows } = await db.query(
-      `UPDATE cart SET quantity = $1 WHERE id = $2 RETURNING *`,
-      [quantity, cartItemId]
+      `INSERT INTO cart (user_id, shoe_id, name, "imageUrl", size, price, quantity) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7) 
+       RETURNING *;`,
+      [userId, shoeId, name, imageUrl, size, price, quantity]
     );
+ 
     return rows[0];
   } catch (error) {
+    console.error('Error adding item to cart:', error);
     throw error;
   }
 }
 
-async function getCartItems(userId) {
+async function insertCart() {
   try {
-    const { rows } = await db.query(`
-      SELECT cart.*, shoes.name, shoes."imageUrl", shoes.price * cart.quantity AS total_price, cart.size AS shoe_size
-      FROM cart
-      JOIN shoes ON cart.shoe_id = shoes.id
-      WHERE cart.user_id = $1
-    `, [userId]);
-    return rows;
-  } catch (err) {
-    throw err;
+    const allUsers = await addToUserCart();
+
+    for (const user of allUsers) {
+      for (const item of user.cartItems) {
+        const { shoeId, size } = item;
+
+        const shoe = await getShoeById(shoeId);
+
+        await addToCart(user.id, shoeId, shoe.name, shoe.imageUrl, size, shoe.price, 1);
+      }
+    }
+    
+    console.log('Seeded cart successfully');
+  } catch (error) {
+    console.error('Error inserting seeded data', error);
   }
 }
 
-module.exports = {
-  getAllCart,
-  addToCart,
-  updateCartItem,
-  getCartItems
-};
+
+module.exports = { addToCart, insertCart, };

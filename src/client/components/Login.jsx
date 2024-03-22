@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, NavLink, useNavigate } from 'react-router-dom'; 
 import '../styles/Login.css';
 
-const Login = ({ setToken }) => { // Receive setToken function as prop
+const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize navigate hook
+  const navigate = useNavigate(); 
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -31,8 +31,8 @@ const Login = ({ setToken }) => { // Receive setToken function as prop
       const result = await response.json();
       setMessage(result.message);
       if (response.ok) {
-        setToken(result.token); // Store the token upon successful login
-        navigate('/catalog'); // Redirect to catalog page after successful login
+        setToken(result.token);
+        navigate('/catalog');
       } else {
         throw result;
       }

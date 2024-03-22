@@ -1,32 +1,18 @@
-// src/server/api/cart.js
 const express = require('express');
 const cartRouter = express.Router();
-const { getCartItems, addToCart } = require('../db/cart');
-const { getShoeById } = require('../db/shoes'); // Import the function to fetch shoe details by ID
+const { addToCart } = require('../db/cart');
 
-// Endpoint to get all cart items
-cartRouter.get('/', async (req, res, next) => {
-  try {
-    const userId = req.user.id;
-    const cartItems = await getCartItems(userId); // Pass userId to getCartItems function
-    res.json(cartItems);
-  } catch (error) {
-    console.error('Error fetching cart items:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// Endpoint to add item to user's cart
 cartRouter.post('/add', async (req, res, next) => {
   try {
-    const { shoeId, size, price, quantity } = req.body;
-    const userId = req.user.id;
+    const { userId, shoe, quantity } = req.body;
 
-    // Add item to user's cart
-    await addToCart(userId, shoeId, size, price, quantity);
+    if (!shoe || !shoe.id) {
+      throw new Error('Invalid shoe data in request');
+    }
 
-    // Fetch the details of the shoe that was added to the cart
-    const shoe = await getShoeById(shoeId);
+    const { id: shoeId, name, imageUrl, price, size } = shoe;
+
+    await addToCart(userId, shoeId, name, imageUrl, size, price, quantity);
 
     res.status(201).json({ message: 'Item added to cart successfully' });
   } catch (error) {

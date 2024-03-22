@@ -1,20 +1,8 @@
-// src/server/db/seed.js
-
 const db = require('./client');
-const { createUser, addToUserCart, getAllUsers } = require('./users');
+const { createUser, addToUserCart } = require('./users');
 const { createShoe, insertShoeSize } = require('./shoes');
 const { addToCart } = require('./cart')
 
-const carts = [
-  {
-    userId: [],
-    shoeId: [],
-    size: [],
-    price: [], // Adjust the price according to the shoe
-    quantity: [], // Adjust quantity as needed
-  },
-  // Add more cart items as needed
-];
 
 const users = [
   {
@@ -26,9 +14,7 @@ const users = [
     city: 'Detroit',
     state: 'Michigan',
     zipcode: '12345',
-    cartItems: [
-      { shoeId: 1, size: 10.5 }, // Adjust shoeId and size accordingly
-    ],
+    cartItems: [], 
   }
 ];
 
@@ -45,7 +31,7 @@ const shoes = [
     id: 2,
     name: "Jordan 5 Retro UNC University Blue",
     brand: "Air Jordan",
-    sizes: [11.0, 10.5, 11, 12],
+    sizes: [11, 10.5, 12],
     imageUrl: "https://th.bing.com/th/id/OIP.PIoBq7D_xjzZF5K-ZMIHuwAAAA?rs=1&pid=ImgDetMain",
     price: "215.00"
   },
@@ -137,11 +123,12 @@ const createTables = async () => {
           id SERIAL PRIMARY KEY,
           user_id INTEGER REFERENCES users(id),
           shoe_id INTEGER REFERENCES shoes(id),
+          name TEXT,
+          "imageUrl" TEXT,
           size DECIMAL (3, 1),
           price DECIMAL (10, 2),
           quantity INTEGER
         )`);
-        //add new table to handle cart and shoes (cart.id), (shoe.id)
     }
     catch(err) {
         throw err;
@@ -181,7 +168,7 @@ const insertUsers = async () => {
 const insertShoes = async () => {
   try {
     for (const shoe of shoes) {
-      // Create the shoe without including the size
+
       const newShoe = await createShoe({
         id: shoe.id,
         name: shoe.name,
@@ -190,7 +177,6 @@ const insertShoes = async () => {
         price: shoe.price,
       });
 
-      // For each size in the shoe's sizes array, insert a record into the shoe_sizes table
       for (const size of shoe.sizes) {
         await insertShoeSize(newShoe.id, size);
       }
@@ -203,22 +189,11 @@ const insertShoes = async () => {
 
 async function insertCart() {
   try {
-    // Fetch all users
-    const allUsers = await getAllUsers();
-
-    // Insert an empty cart for each user
-    for (const user of allUsers) {
-      await addToCart(user.id, null, null, null, null); // Insert an empty cart for the user
-    }
-    
     console.log('Seeded cart successfully');
   } catch (error) {
     console.error('Error inserting seeded data', error);
   }
 }
-
-
-
 
 const seedDatabase = async () => {
   try {
