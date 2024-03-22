@@ -80,32 +80,33 @@ const getUserByEmail = async (email) => {
   }
 };
 
-const addToUserCart = async (userId, shoeId, size) => {
+const addToUserCart = async (userId, shoeId, size, quantity, price) => {
   try {
-    // Check if the user already has a cart
-    const { rows: [existingCart] } = await db.query(
-      `SELECT * FROM users WHERE id = $1`,
-      [userId]
-    );
+    // Fetch user's existing cart
+    const { rows: [user] } = await db.query('SELECT * FROM users WHERE id = $1', [userId]);
+    let updatedCart = [];
 
-    // If the user doesn't have a cart yet, create one
-    if (!existingCart.userCart) {
-      await db.query(
-        `UPDATE users SET userCart = $1 WHERE id = $2`,
-        [[{ shoeId, size }], userId]
-      );
-    } else {
-      // If the user already has a cart, append the new item to the existing cart
-      const updatedCart = [...existingCart.userCart, { shoeId, size }];
-      await db.query(
-        `UPDATE users SET userCart = $1 WHERE id = $2`,
-        [updatedCart, userId]
-      );
+    // If the user exists and has an existing cart, parse it
+    if (user && user.userCart) {
+      updatedCart = JSON.parse(user.userCart);
     }
+
+    // Add the new item to the cart
+    updatedCart.push({ shoeId, size, quantity, price });
+
+    // Calculate total price
+    const totalPrice = updatedCart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+    // Update user's cart and total price in the database
+    await db.query('UPDATE users SET userCart = $1, cartTotalPrice = $2 WHERE id = $3', [JSON.stringify(updatedCart), totalPrice, userId]);
+
   } catch (error) {
     throw error;
   }
 };
+
+
+
 
 module.exports = {
   createUser,

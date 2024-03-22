@@ -1,7 +1,6 @@
-// Home.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom'; 
-import '../styles/Home.css'; // Import CSS file for styling
+import '../styles/Home.css'; 
 
 function Home() {
   return (

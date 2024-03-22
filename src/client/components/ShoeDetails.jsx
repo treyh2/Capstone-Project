@@ -1,10 +1,11 @@
+//src/client/components/ShoeDetails.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
 
-function ShoeDetails() {
+function ShoeDetails({ currentUser }) {
   const { name } = useParams();
+  const navigate = useNavigate();
   const [shoe, setShoe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState('');
@@ -24,30 +25,45 @@ function ShoeDetails() {
     fetchShoeDetails();
   }, [name]);
 
-    const addToCart = async (selectedSize) => {
-  if (!selectedSize) {
-    setError('Please select a size');
-    return;
-  }
-
-  try {
-    // Log the URL before making the request
-    const url = '/api/cart/add';
-    console.log('Request URL:', url);
-
-    const response = await axios.post(url, {
-      shoeId: shoe.id,
-      size: selectedSize,
-    });
-
-    console.log('Response:', response.data);
-  } catch (error) {
-    console.error('Error adding to cart:', error);
-    setError('Failed to add item to cart'); // Update error state
-  }
-};
-
+  const addToCart = async () => {
+    if (!shoe) {
+      console.error('Shoe object is undefined');
+      return;
+    }
+    console.log('Shoe Object:', shoe)
+    if (!currentUser) {
+      setError('Please log in to add items to your cart');
+      return;
+    }
   
+    if (!selectedSize) {
+      setError('Please select a size');
+      return;
+    }
+  
+    try {
+      // Add item to cart using the shoe ID
+      const addToCartResponse = await axios.post('/api/cart/add', {
+        userId: currentUser.id,
+        shoeId: shoe.id, // Use shoe.id as the shoeId
+        size: selectedSize,
+        price: shoe.price,
+        quantity: 1,
+      });
+  
+      console.log('Response:', addToCartResponse.data);
+      navigate('/cart');
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      setError('Failed to add item to cart');
+    }
+  };
+  
+
+  const handleSizeChange = (e) => {
+    setSelectedSize(e.target.value);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -70,7 +86,7 @@ function ShoeDetails() {
         <img src={shoe.imageUrl} alt={shoe.name} />
         <p>Brand: {shoe.brand}</p>
         <p>Price: ${shoe.price}</p>
-        <select value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
+        <select value={selectedSize} onChange={handleSizeChange}>
           <option value=''>Select Size</option>
           {shoe.sizes && shoe.sizes.map((size) => (
             <option key={size} value={size}>
@@ -78,7 +94,7 @@ function ShoeDetails() {
             </option>
           ))}
         </select>
-        <button onClick= {() => addToCart(selectedSize)}>Add to Cart</button>
+        <button onClick={addToCart}>Add to Cart</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>

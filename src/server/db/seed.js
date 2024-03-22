@@ -1,8 +1,20 @@
 // src/server/db/seed.js
 
 const db = require('./client');
-const { createUser, addToUserCart } = require('./users');
+const { createUser, addToUserCart, getAllUsers } = require('./users');
 const { createShoe, insertShoeSize } = require('./shoes');
+const { addToCart } = require('./cart')
+
+const carts = [
+  {
+    userId: [],
+    shoeId: [],
+    size: [],
+    price: [], // Adjust the price according to the shoe
+    quantity: [], // Adjust quantity as needed
+  },
+  // Add more cart items as needed
+];
 
 const users = [
   {
@@ -18,7 +30,6 @@ const users = [
       { shoeId: 1, size: 10.5 }, // Adjust shoeId and size accordingly
     ],
   }
-  // Add more user objects as needed
 ];
 
 const shoes = [
@@ -78,7 +89,7 @@ const dropTables = async () => {
           DROP TABLE IF EXISTS shoe_sizes CASCADE;
       `);
       await db.query(`
-          DROP TABLE IF EXISTS users_carts CASCADE; 
+          DROP TABLE IF EXISTS cart CASCADE; 
       `);
       await db.query(`
           DROP TABLE IF EXISTS users CASCADE; 
@@ -105,7 +116,7 @@ const createTables = async () => {
           state VARCHAR(50) NOT NULL,
           zipcode VARCHAR(5) NOT NULL,
           userCart TEXT,
-          pastOrders TEXT
+          cartTotalPrice DECIMAL (10, 2) DEFAULT 0  -- Removed the extra semicolon here
         )`);
         await db.query(`
         CREATE TABLE shoes(
@@ -122,13 +133,15 @@ const createTables = async () => {
           size DECIMAL (3, 1)
         )`);
         await db.query(`
-        CREATE TABLE users_carts (
+        CREATE TABLE cart (
           id SERIAL PRIMARY KEY,
           user_id INTEGER REFERENCES users(id),
           shoe_id INTEGER REFERENCES shoes(id),
-          size DECIMAL(3, 1),
-          CONSTRAINT unique_user_shoe_size UNIQUE (user_id, shoe_id, size)
+          size DECIMAL (3, 1),
+          price DECIMAL (10, 2),
+          quantity INTEGER
         )`);
+        //add new table to handle cart and shoes (cart.id), (shoe.id)
     }
     catch(err) {
         throw err;
@@ -188,6 +201,25 @@ const insertShoes = async () => {
   }
 };
 
+async function insertCart() {
+  try {
+    // Fetch all users
+    const allUsers = await getAllUsers();
+
+    // Insert an empty cart for each user
+    for (const user of allUsers) {
+      await addToCart(user.id, null, null, null, null); // Insert an empty cart for the user
+    }
+    
+    console.log('Seeded cart successfully');
+  } catch (error) {
+    console.error('Error inserting seeded data', error);
+  }
+}
+
+
+
+
 const seedDatabase = async () => {
   try {
       await db.connect();
@@ -195,6 +227,7 @@ const seedDatabase = async () => {
       await createTables();
       await insertUsers();
       await insertShoes();
+      await insertCart();
   }
   
   catch (err) {

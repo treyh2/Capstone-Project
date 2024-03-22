@@ -65,7 +65,6 @@ const Register = ({ setToken }) => {
                 zipcode,
             };
     
-            // Perform the registration request
             const response = await fetch('http://localhost:3000/api/users/register', {
                 method: 'POST',
                 headers: {
@@ -74,26 +73,18 @@ const Register = ({ setToken }) => {
                 body: JSON.stringify(payload)
             });
     
-            // Check if the registration was successful
             if (response.ok) {
-                // Registration successful, set the message
                 setMessage('Thanks for signing up! Please sign in');
     
-                // Redirect to login page after a delay
                 setTimeout(() => {
                     navigate('/login');
                 }, 2000);
-    
-                // Optionally, you can set the token here if needed
-                // const user = await response.json();
-                // setToken(user.token);
+
             } else {
-                // Registration failed, handle the error
                 const data = await response.json();
                 throw new Error(data.message);
             }
         } catch (err) {
-            // Handle any errors during registration
             console.error(err);
             setMessage(err.message);
         }

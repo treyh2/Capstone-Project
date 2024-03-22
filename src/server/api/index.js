@@ -4,9 +4,9 @@ const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const volleyball = require('volleyball');
 
-// Importing routers
 const usersRouter = require('./users');
 const shoesRouter = require('./shoes');
+const cartRouter = require('./cart')
 
 apiRouter.use(volleyball);
 
@@ -16,19 +16,15 @@ apiRouter.use(async (req, res, next) => {
   if (!auth) { 
     next();
   } 
-  else if (auth.startsWith('Bearer')) { // Corrected token type check
-    // Extracting token from Authorization header
-    const token = auth.split(' ')[1]; // Extract token after 'Bearer'
+  else if (auth.startsWith('Bearer')) { 
+    const token = auth.split(' ')[1];
 
     try {
-      // Verifying the token
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET); // Replace 'YOUR_SECRET_KEY' with your actual secret key
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       console.log('decoded token:', decodedToken)
-      // Assuming token payload contains user id
-      const userId = decodedToken.id;
-
-      // Set req.user with user id
-      req.user = userId;
+      
+      req.user = decodedToken; // Assign the entire decoded token object to req.user
+      console.log('req.user:', req.user); // Add this line to ensure req.user is populated
       
       next();
     } catch (error) {
@@ -44,11 +40,10 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-// Mounting routers
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/shoes', shoesRouter);
+apiRouter.use('/cart', cartRouter);
 
-// Error handling middleware
 apiRouter.use((err, req, res, next) => {
   res.status(500).send(err);
 });
