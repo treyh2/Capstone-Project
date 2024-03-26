@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, NavLink, useNavigate } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/ShoeDetails.css';
 
 function ShoeDetails({ token }) {
   const { name } = useParams();
-  const navigate = useNavigate();
   const [shoe, setShoe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     async function fetchShoeDetails() {
@@ -30,7 +30,7 @@ function ShoeDetails({ token }) {
       console.error('Shoe object is undefined');
       return;
     }
-    console.log('Shoe Object:', shoe)
+
     if (!token) {
       setError('Please log in to add items to your cart');
       return;
@@ -50,18 +50,20 @@ function ShoeDetails({ token }) {
         size: selectedSize,
       };
   
-      const addToCartResponse = await axios.post('/api/cart/add', {
+      // Make the API request to add the item to the cart
+      // Assuming it returns success if the item is added to the cart
+      // You should adjust this based on your actual backend implementation
+      await axios.post('/api/cart/add', {
         shoe: shoeToAdd,
         quantity: 1,
-      }, 
-      {
+      }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-  
-      console.log('Response:', addToCartResponse.data);
-      navigate('/cart');
+
+      // Set success message
+      setSuccessMessage('Item added to cart successfully!');
     } catch (error) {
       console.error('Error adding to cart:', error);
       setError('Failed to add item to cart');
@@ -106,6 +108,7 @@ function ShoeDetails({ token }) {
             </select>
             <button onClick={addToCart}>Add to Cart</button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
+            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
           </div>
         </div>
       </div>

@@ -1,15 +1,20 @@
+// Catalog.jsx
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import '../styles/Catalog.css';
+import CartDropdown from './CartDropdown'; // Import the cart dropdown component
 
 function Catalog() {
+  // State variables
   const [shoes, setShoes] = useState([]);
   const [sortedShoes, setSortedShoes] = useState([]);
   const [sortOrder, setSortOrder] = useState('default');
   const [searchTerm, setSearchTerm] = useState('');
-  const location = useLocation
+  const [cartItems, setCartItems] = useState([]);
+  const [cartVisible, setCartVisible] = useState(false); // Flag to toggle cart dropdown
 
+  // Fetch shoes on component mount
   useEffect(() => {
     async function fetchShoes() {
       try {
@@ -28,14 +33,16 @@ function Catalog() {
         setSortedShoes([]);
       }
     }
-  
     fetchShoes();
+
+    // Fetch cart items on component mount
+    fetchCartItems();
   }, []);
 
+  // Sort shoes based on selected sort order
   useEffect(() => {
-    // Sort shoes based on the selected sort order
     if (sortOrder === 'default') {
-      setSortedShoes(shoes); // If default, set shoes as they are
+      setSortedShoes(shoes);
     } else if (sortOrder === 'highestToLowest') {
       const sorted = [...shoes].sort((a, b) => b.price - a.price);
       setSortedShoes(sorted);
@@ -45,6 +52,34 @@ function Catalog() {
     }
   }, [shoes, sortOrder]);
 
+  // Function to add a shoe to the cart
+  const addToCart = async (shoeId) => {
+    try {
+      const response = await axios.post('/api/cart/add', { shoeId });
+      console.log(response.data);
+      // Fetch cart items again to reflect changes
+      fetchCartItems();
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+
+  // Fetch cart items
+  const fetchCartItems = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`/api/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCartItems(response.data);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
+  };
+
+  // Handler functions for sorting and searching
   const handleSort = (e) => {
     setSortOrder(e.target.value);
   };
@@ -52,12 +87,12 @@ function Catalog() {
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-  
+
   // Filter shoes based on search term
   const filteredShoes = sortedShoes.filter(shoe => 
     shoe.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+
   return (
     <div className="catalog-container">
       <header className="header">
@@ -67,6 +102,8 @@ function Catalog() {
           <NavLink to='/login'>Login</NavLink>
         </div>
       </header>
+      {/* Render the cart dropdown */}
+      <CartDropdown cartItems={cartItems} cartVisible={cartVisible} setCartVisible={setCartVisible} addToCart={addToCart} />
       <div className="shoes-container">
         <h1 className="title">Explore Our Collection</h1>
         <div className="search-bar">
@@ -93,14 +130,17 @@ function Catalog() {
                 <div className="shoe-info">
                   <h2 className="shoe-name">{shoe.name}</h2>
                   <p className="shoe-price">${shoe.price}</p>
+                  <button onClick={() => addToCart(shoe.id)}>Add to Cart</button>
                 </div>
               </Link>
             </div>
           ))}
         </div>
-      </div>
+        </div>
     </div>
   );
 }
 
 export default Catalog;
+
+      

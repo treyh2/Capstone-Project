@@ -1,0 +1,18 @@
+.cart-container {
+  position: fixed;
+  top: 125px; /* Adjust this value to position the dropdown below the navbar */
+  left: 50px; /* Adjust this value to position the dropdown to the left */
+  z-index: 1000;
+}
+
+.cart-content {
+  border: 1px solid black;
+  background-color: white;
+  padding: 10px;
+  display: none;
+  width: 200px;
+}
+
+.cart-container.cart-visible .cart-content {
+  display: block;
+}
