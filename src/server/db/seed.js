@@ -122,7 +122,7 @@ const shoes = [
     sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: "https://images.stockx.com/360/Air-Jordan-4-Retro-SB-Pine-Green/Images/Air-Jordan-4-Retro-SB-Pine-Green/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1678350115",
     price: "360.00"
-  },
+  }, 
   {
     id: 14,
     name: "Dunk Low Night Sky",
