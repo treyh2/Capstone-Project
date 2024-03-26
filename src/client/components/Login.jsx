@@ -6,12 +6,12 @@ const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // New state
   const navigate = useNavigate(); 
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -32,7 +32,11 @@ const Login = ({ setToken }) => {
       setMessage(result.message);
       if (response.ok) {
         setToken(result.token);
-        navigate('/catalog');
+        setShowSuccessMessage(true); // Show success message
+        setTimeout(() => {
+          setShowSuccessMessage(false); // Hide success message after 3 seconds
+          navigate('/catalog');
+        }, 3000);
       } else {
         throw result;
       }
@@ -82,7 +86,7 @@ const Login = ({ setToken }) => {
           </div>
           <button type='submit'>Login</button>
         </form>
-        <p>{message}</p>
+        {message && <p>{message}</p>}
         <Link to='/register'>Register</Link>
       </div>
     </div>

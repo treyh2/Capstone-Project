@@ -1,0 +1,60 @@
+.single-shoe-container {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  height: 100vh;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.shoes-container {
+  margin-top: 20px;
+}
+
+.shoe-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shoe-info {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.shoe-name {
+  font-size: 18px;
+}
+
+.shoe-img2 {
+  width: 300px; 
+  height: auto;
+  border-radius: 10px;
+}
+
+.shoe-info select,
+.shoe-info button {
+  margin-top: 10px;
+}
+
+@media (max-width: 992px) {
+  .shoes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .shoes-grid {
+    grid-template-columns: 1fr;
+  }
+}

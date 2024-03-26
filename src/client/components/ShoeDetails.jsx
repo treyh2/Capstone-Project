@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/ShoeDetails.css';
 
 function ShoeDetails({ token }) {
   const { name } = useParams();
@@ -80,7 +81,7 @@ function ShoeDetails({ token }) {
   }
 
   return (
-    <div className='single-shoe-header'>
+    <div className='single-shoe-container'>
       <header className='header'>
         <div className='navbar'>
           <NavLink to='/'>Home</NavLink>
@@ -88,22 +89,25 @@ function ShoeDetails({ token }) {
           <NavLink to='/login'>Login</NavLink>
         </div>
       </header>
-      <div className="single-shoe-container">
-        <h1>{shoe.name}</h1>
-        <img src={shoe.imageUrl} alt={shoe.name} />
-        <p>{shoe.name}</p>
-        <p>{shoe.brand}</p>
-        <p>${shoe.price}</p>
-        <select value={selectedSize} onChange={handleSizeChange}>
-          <option value=''>Select Size</option>
-          {shoe.sizes && shoe.sizes.map((size) => (
-            <option key={size} value={size}>
-              {size}
-            </option>
-          ))}
-        </select>
-        <button onClick={addToCart}>Add to Cart</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+      <div className="shoes-container">
+        <div className='shoe-details'>
+          <img src={shoe.imageUrl} alt={shoe.name} className="shoe-img2" />
+          <div className="shoe-info">
+            <p className='shoe-name'>{shoe.name}</p>
+            <p>{shoe.brand}</p>
+            <p>${shoe.price}</p>
+            <select value={selectedSize} onChange={handleSizeChange}>
+              <option value=''>Select Size</option>
+              {shoe.sizes && shoe.sizes.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+            <button onClick={addToCart}>Add to Cart</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </div>
+        </div>
       </div>
     </div>
   );

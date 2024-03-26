@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import '../styles/Register.css';
 
 const Register = ({ setToken }) => {
   const [email, setEmail] = useState('');
@@ -13,176 +14,145 @@ const Register = ({ setToken }) => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-      const registerUser = async () => {
-          try {
-              const response = await fetch('http://localhost:3000/api/users/register', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      email,
-                      password,
-                      firstname,
-                      lastname,
-                      address,
-                      city,
-                      state,
-                      zipcode
-                  })
-              });
-              const result = await response.json();
-              setMessage(result.message);
-              if (!response.ok) {
-                  throw new Error(result.message);
-              }
-              setEmail('');
-              setPassword('');
-              setFirstName('');
-              setLastName('');
-              setStreet('');
-              setCity('');
-              setState('');
-              setZipcode('');
-          } catch (err) {
-              console.error(`Error during registration: ${err}`);
-              setMessage(err.message);
-          }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const payload = {
+        firstname,
+        lastname,
+        email,
+        password,
+        address,
+        city,
+        state,
+        zipcode,
       };
 
-      async function handleSubmit(event) {
-        event.preventDefault();
-    
-        try {
-            const payload = {
-                firstname,
-                lastname,
-                email,
-                password,
-                address,
-                city,
-                state,
-                zipcode,
-            };
-    
-            const response = await fetch('http://localhost:3000/api/users/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-    
-            if (response.ok) {
-                setMessage('Thanks for signing up! Please sign in');
-    
-                setTimeout(() => {
-                    navigate('/login');
-                }, 2000);
+      const response = await fetch('http://localhost:3000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
 
-            } else {
-                const data = await response.json();
-                throw new Error(data.message);
-            }
-        } catch (err) {
-            console.error(err);
-            setMessage(err.message);
-        }
+      if (response.ok) {
+        setMessage('Thanks for signing up! Please sign in');
+
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+
+      } else {
+        const data = await response.json();
+        throw new Error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage(err.message);
     }
-    
+  };
 
   return (
     <div className='register-container'>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='email'>Email:</label>
-          <input
-            type='email'
-            id='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <header className='header'>
+        <div className='navbar'>
+          <NavLink to='/'>Home</NavLink>
+          <NavLink to='/catalog'>Catalog</NavLink>
+          <NavLink to='/login'>Login</NavLink>
         </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
-          <input
-            type='password'
-            id='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='firstName'>First Name:</label>
-          <input
-            type='text'
-            id='firstName'
-            value={firstname}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='lastName'>Last Name:</label>
-          <input
-            type='text'
-            id='lastName'
-            value={lastname}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='address'>Street Address:</label>
-          <input
-            type='text'
-            id='address'
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='city'>City:</label>
-          <input
-            type='text'
-            id='city'
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='state'>State:</label>
-          <input
-            type='text'
-            id='state'
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='zip'>Zip Code:</label>
-          <input
-            type='text'
-            id='zip'
-            value={zipcode}
-            onChange={(e) => setZipcode(e.target.value)}
-            required
-          />
-        </div>
-        <div className='form-footer'>
-          <Link to='/login' className='register-route'>
-            Already have an account? Login
-          </Link>
-          <button type='submit'>Register</button>
-        </div>
-      </form>
-      <p>{message}</p>
+      </header>
+      <div className='register-box'>
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor='email'>Email:</label>
+            <input
+              type='email'
+              id='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='password'>Password:</label>
+            <input
+              type='password'
+              id='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='firstName'>First Name:</label>
+            <input
+              type='text'
+              id='firstName'
+              value={firstname}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='lastName'>Last Name:</label>
+            <input
+              type='text'
+              id='lastName'
+              value={lastname}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='address'>Street Address:</label>
+            <input
+              type='text'
+              id='address'
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='city'>City:</label>
+            <input
+              type='text'
+              id='city'
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='state'>State:</label>
+            <input
+              type='text'
+              id='state'
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='zip'>Zip Code:</label>
+            <input
+              type='text'
+              id='zip'
+              value={zipcode}
+              onChange={(e) => setZipcode(e.target.value)}
+              required
+            />
+          </div>
+              <button type='submit'>Register</button>
+        </form>
+        <p>{message}</p>
+        <Link to='/login' className='register-route'>
+                Already have an account?
+        </Link>
+      </div>
     </div>
   );
 };

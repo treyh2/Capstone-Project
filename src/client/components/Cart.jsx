@@ -8,9 +8,8 @@ function Cart() {
   useEffect(() => {
     async function fetchCartItems() {
       try {
-        // Fetch JWT token from local storage or wherever it's stored
         const token = localStorage.getItem('token');
-        const response = await axios.get('/api/cart', {
+        const response = await axios.get(`/api/cart`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -26,8 +25,8 @@ function Cart() {
   }, []);
 
   const handleCheckout = async () => {
-    console.log('Checkout logic goes here');
-    // Add logic for handling checkout (if needed)
+    console.log('Checkout logic');
+
   };
 
   if (loading) {

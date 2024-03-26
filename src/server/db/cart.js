@@ -38,12 +38,12 @@ async function insertCart() {
   }
 }
 
-async function getCartItemsByUserId(userId) {
+async function getCartItems(cartId) {
   try {
     const { rows } = await db.query(`
       SELECT * FROM cart
       WHERE user_id = $1
-    `, [userId]);
+    `, [cartId]);
     return rows;
   } catch (error) {
     console.error('Error fetching cart items:', error);
@@ -53,4 +53,4 @@ async function getCartItemsByUserId(userId) {
 
 
 
-module.exports = { addToCart, insertCart, getCartItemsByUserId };
+module.exports = { addToCart, insertCart, getCartItems };

@@ -1,7 +1,7 @@
 //src/client/app.jsx
 import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'; 
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
 import Catalog from './components/Catalog';
 import Login from './components/Login';
 import Home from './components/Home';

@@ -1,6 +1,6 @@
 const express = require('express');
 const cartRouter = express.Router();
-const { addToCart, getCartItemsByUserId } = require('../db/cart');
+const { addToCart, getCartItems } = require('../db/cart');
 
 cartRouter.post('/add', async (req, res, next) => {
   try {
@@ -22,9 +22,9 @@ cartRouter.post('/add', async (req, res, next) => {
 });
 
 cartRouter.get('/cart', async (req, res, next) => {
-  const user_id = req.user.id;
+  const cartId = req.params.cartId;
   try {
-    const cartItems = await db.getCartItemsByUserId(user_id);
+    const cartItems = await db.getCartItems(cartId);
     res.json(cartItems);
   } catch (error) {
     console.error('Error fetching cart items:', error);

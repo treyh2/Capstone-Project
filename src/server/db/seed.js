@@ -23,7 +23,7 @@ const shoes = [
     id: '1',
     name: 'Jordan 11 Retro Low Concord Bred',
     brand: 'Air Jordan',
-    sizes: [10.5],
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: 'https://stockx.imgix.net/images/Air-Jordan-11-Retro-Low-Concord-Bred-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606324216',
     price: '280'
   },
@@ -31,7 +31,7 @@ const shoes = [
     id: 2,
     name: "Jordan 5 Retro UNC University Blue",
     brand: "Air Jordan",
-    sizes: [11, 10.5, 12],
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: "https://th.bing.com/th/id/OIP.PIoBq7D_xjzZF5K-ZMIHuwAAAA?rs=1&pid=ImgDetMain",
     price: "215.00"
   },
@@ -39,7 +39,7 @@ const shoes = [
     id: 3,
     name: "Drake NOCTA Air Force 1",
     brand: "Nike",
-    sizes: [10.5, 11, 12],
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: "https://cdn.shopify.com/s/files/1/0270/5326/0848/products/Nike-Air-Force-1-Low-Drake-Certified-Lover-Boy-Product.webp?v=1669981556",
     price: "210.00"
   },
@@ -47,7 +47,7 @@ const shoes = [
     id: 4,
     name: "Jordan 1 Retro Low Golf Travis Scott",
     brand: "Air Jordan",
-    sizes: [10.0],
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: "https://stockx.imgix.net/images/Air-Jordan-1-Retro-Low-Travis-Scott-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606317345",
     price: "950.00"
   },
@@ -55,7 +55,7 @@ const shoes = [
     id: 5,
     name: "Jordan 4 Retro Military Black",
     brand: "Air Jordan",
-    sizes: [11.5],
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: "https://i.pinimg.com/originals/bf/f3/b4/bff3b4518efde82c67d3cc013d2bf75b.png",
     price: "420.00"
   },
@@ -63,10 +63,98 @@ const shoes = [
     id: 6,
     name: "Jordan 11 Retro Playoffs Bred",
     brand: "Air Jordan",
-    sizes: [11],
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Air-Jordan-11-Retro-Playoffs-2019/Images/Air-Jordan-11-Retro-Playoffs-2019/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1635261996&amp",
+    price: "300.00"
+  },
+  {
+    id: 7,
+    name: "adidas Yeezy Boost 350 V2 Bone",
+    brand: "Yeezy",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/adidas-Yeezy-Boost-350-V2-Pure-Oat/Images/adidas-Yeezy-Boost-350-V2-Pure-Oat/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1703086092&amp",
+    price: "220.00"
+  },
+  {
+    id: 8,
+    name: "Jordan 11 Retro Cool Grey",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Air-Jordan-11-Retro-Cool-Grey-2021/Images/Air-Jordan-11-Retro-Cool-Grey-2021/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1635726052",
+    price: "350.00"
+  },
+  {
+    id: 9,
+    name: "Jordan 1 Retro High OG UNC Toe",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Air-Jordan-1-High-OG-UNC-Toe/Images/Air-Jordan-1-High-OG-UNC-Toe/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1688674754",
+    price: "170.00"
+  },
+  {
+    id: 10,
+    name: "adidas Yeezy Boost 350 V2 Carbon Beluga",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/adidas-Yeezy-350-V2-Carbon-Beluga/Images/adidas-Yeezy-350-V2-Carbon-Beluga/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1686039353",
+    price: "260.00"
+  },
+  {
+    id: 11,
+    name: "Air Force 1 Low Raygun",
+    brand: "Nike",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Nike-Air-Force-1-Low-Raygun/Images/Nike-Air-Force-1-Low-Raygun/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1669969044",
+    price: "170.00"
+  },
+  {
+    id: 12,
+    name: "Air Force 1 Low Time Capsule Pack",
+    brand: "Nike",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Nike-Air-Force-1-Low-Time-Capsule-Pack/Images/Nike-Air-Force-1-Low-Time-Capsule-Pack/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1635259993",
+    price: "125.00"
+  },
+  {
+    id: 13,
+    name: "Jordan 4 Retro SB Pine Green",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Air-Jordan-4-Retro-SB-Pine-Green/Images/Air-Jordan-4-Retro-SB-Pine-Green/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1678350115",
+    price: "360.00"
+  },
+  {
+    id: 14,
+    name: "Dunk Low Night Sky",
+    brand: "Nike",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/360/Nike-Dunk-Low-Night-Sky/Images/Nike-Dunk-Low-Night-Sky/Lv2/img01.jpg?fm=webp&amp;auto=compress&amp;w=576&amp;dpr=2&amp;updated_at=1702394450",
+    price: "110.00"
+  },
+  {
+    id: 15,
+    name: "Jordan 11 Retro Playoffs Bred",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
     imageUrl: "https://stockx.imgix.net/images/Air-Jordan-11-Retro-Playoffs-2019-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606320266",
     price: "300.00"
-  }
+  },
+  {
+    id: 16,
+    name: "Jordan 4 Retro Red Cement",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://stockx.imgix.net/images/Air-Jordan-4-Retro-Fire-Red-2020-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1606762588",
+    price: "240.00"
+  },
+  {
+    id: 17,
+    name: "Jordan 11 Retro DMP Gratitude",
+    brand: "Air Jordan",
+    sizes: [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13.5],
+    imageUrl: "https://images.stockx.com/images/Air-Jordan-11-Retro-DMP-Defining-Moments-2023-PS.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1698943546",
+    price: "180"
+  },
 ];
 
 const dropTables = async () => {
