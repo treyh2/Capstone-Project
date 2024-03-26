@@ -8,7 +8,13 @@ function Cart() {
   useEffect(() => {
     async function fetchCartItems() {
       try {
-        const response = await axios.get('/api/cart');
+        // Fetch JWT token from local storage or wherever it's stored
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/api/cart', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setCartItems(response.data);
         setLoading(false);
       } catch (error) {
@@ -19,9 +25,10 @@ function Cart() {
     fetchCartItems();
   }, []);
 
-  /*const handleCheckout = async () => {
+  const handleCheckout = async () => {
     console.log('Checkout logic goes here');
-  };*/
+    // Add logic for handling checkout (if needed)
+  };
 
   if (loading) {
     return <p>Loading cart...</p>;
@@ -40,7 +47,7 @@ function Cart() {
             <div>
               <img src={item.imageUrl} alt={item.name} style={{ width: '50px' }} />
               <div>{item.name}</div>
-              <div>Size: {item.shoe_size}</div>
+              <div>Size: {item.size}</div>
               <div>Price: {typeof item.price === 'number' ? `$${item.price.toFixed(2)}` : 'Price not available'}</div>
               <div>Quantity: {item.quantity}</div>
               <div>Total Price: {typeof item.total_price === 'number' ? `$${item.total_price.toFixed(2)}` : 'Total price not available'}</div>

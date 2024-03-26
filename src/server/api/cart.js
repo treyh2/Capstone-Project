@@ -1,6 +1,6 @@
 const express = require('express');
 const cartRouter = express.Router();
-const { addToCart } = require('../db/cart');
+const { addToCart, getCartItemsByUserId } = require('../db/cart');
 
 cartRouter.post('/add', async (req, res, next) => {
   try {
@@ -20,5 +20,17 @@ cartRouter.post('/add', async (req, res, next) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+cartRouter.get('/cart', async (req, res, next) => {
+  const user_id = req.user.id;
+  try {
+    const cartItems = await db.getCartItemsByUserId(user_id);
+    res.json(cartItems);
+  } catch (error) {
+    console.error('Error fetching cart items:', error);
+    next(error);
+  }
+});
+
 
 module.exports = cartRouter;
