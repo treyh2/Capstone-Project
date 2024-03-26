@@ -38,12 +38,12 @@ async function insertCart() {
   }
 }
 
-async function getCartItems(cartId) {
+async function getCartItems(userId) {
   try {
     const { rows } = await db.query(`
       SELECT * FROM cart
       WHERE user_id = $1
-    `, [cartId]);
+    `, [userId]);
     return rows;
   } catch (error) {
     console.error('Error fetching cart items:', error);

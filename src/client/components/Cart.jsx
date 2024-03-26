@@ -14,6 +14,7 @@ function Cart() {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response.data);
         setCartItems(response.data);
         setLoading(false);
       } catch (error) {

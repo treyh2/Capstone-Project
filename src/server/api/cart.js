@@ -21,10 +21,11 @@ cartRouter.post('/add', async (req, res, next) => {
   }
 });
 
-cartRouter.get('/cart', async (req, res, next) => {
-  const cartId = req.params.cartId;
+cartRouter.get('/', async (req, res, next) => {
+  const userId = req.user.id;
   try {
-    const cartItems = await db.getCartItems(cartId);
+    const cartItems = await getCartItems(userId);
+    console.log('cart items:', cartItems)
     res.json(cartItems);
   } catch (error) {
     console.error('Error fetching cart items:', error);

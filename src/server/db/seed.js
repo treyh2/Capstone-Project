@@ -277,6 +277,10 @@ const insertShoes = async () => {
 
 async function insertCart() {
   try {
+    const cartItems = [{ user_id: 1, shoeId: 1, name: 'Jordan 11 Retro Low Concord Bred', imageUrl: 'https://example.com/image1.jpg', size: 10, price: 280, quantity: 1 }];
+    for (const item of cartItems) {
+      await addToCart(item.user_id, item.shoeId, item.name, item.imageUrl, item.size, item.price, item.quantity);
+    }
     console.log('Seeded cart successfully');
   } catch (error) {
     console.error('Error inserting seeded data', error);
