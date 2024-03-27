@@ -47,7 +47,6 @@ cartRouter.get('/', async (req, res, next) => {
   const userId = req.user.id;
   try {
     const cartItems = await getCartItems(userId);
-    console.log('cart items:', cartItems)
     res.json(cartItems);
   } catch (error) {
     console.error('Error fetching cart items:', error);
@@ -56,7 +55,7 @@ cartRouter.get('/', async (req, res, next) => {
 });
 
 cartRouter.post('/clear', async (req, res, next) => {
-  const userId = req.user.id; // Assuming user information is available in the request
+  const userId = req.user.id;
   try {
     await clearCart(userId);
     res.status(200).json({ message: 'Cart cleared successfully' });

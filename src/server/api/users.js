@@ -26,7 +26,6 @@ usersRouter.get('/current-user', async( req, res, next) => {
 
 usersRouter.post('/login', async(req, res, next) => {
     const { email, password } = req.body;
-    console.log('login request payload:', { email, password });
     if(!email || !password) {
         next({
             name: 'MissingCredentialsError',

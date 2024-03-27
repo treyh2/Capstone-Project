@@ -1,4 +1,3 @@
-//src/client/app.jsx
 import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'; 
 import axios from 'axios';
@@ -43,8 +42,6 @@ function App() {
     setToken(newToken);
     localStorage.setItem('token', newToken); 
   };
-
-  // Function to handle logout
   
 
   return (

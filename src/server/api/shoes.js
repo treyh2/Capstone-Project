@@ -13,7 +13,6 @@ shoeRouter.get('/', async (req, res, next) => {
 
 shoeRouter.post('/', async (req, res) => {
   const shoe = await createShoe(req.body)
-  console.log('req.body')
   res.send(shoe);
 });
 

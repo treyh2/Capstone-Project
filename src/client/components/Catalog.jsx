@@ -1,27 +1,24 @@
-// Catalog.jsx
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { NavLink, Link } from 'react-router-dom';
 import '../styles/Catalog.css';
-import CartDropdown from './CartDropdown'; // Import the cart dropdown component
+import CartDropdown from './CartDropdown'; 
 
 function Catalog() {
-  // State variables
   const [shoes, setShoes] = useState([]);
   const [sortedShoes, setSortedShoes] = useState([]);
   const [sortOrder, setSortOrder] = useState('default');
   const [searchTerm, setSearchTerm] = useState('');
   const [cartItems, setCartItems] = useState([]);
-  const [cartVisible, setCartVisible] = useState(false); // Flag to toggle cart dropdown
+  const [cartVisible, setCartVisible] = useState(false);
 
-  // Fetch shoes on component mount
   useEffect(() => {
     async function fetchShoes() {
       try {
         const { data } = await axios.get('/api/shoes');
         if (Array.isArray(data)) {
           setShoes(data);
-          setSortedShoes(data); // Initially, set sortedShoes to be the same as shoes
+          setSortedShoes(data); 
         } else {
           console.error('Invalid data format for shoes:', data);
           setShoes([]);
@@ -35,11 +32,9 @@ function Catalog() {
     }
     fetchShoes();
 
-    // Fetch cart items on component mount
     fetchCartItems();
   }, []);
 
-  // Sort shoes based on selected sort order
   useEffect(() => {
     if (sortOrder === 'default') {
       setSortedShoes(shoes);
@@ -52,19 +47,15 @@ function Catalog() {
     }
   }, [shoes, sortOrder]);
 
-  // Function to add a shoe to the cart
   const addToCart = async (shoeId) => {
     try {
       const response = await axios.post('/api/cart/add', { shoeId });
-      console.log(response.data);
-      // Fetch cart items again to reflect changes
       fetchCartItems();
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
   };
 
-  // Fetch cart items
   const fetchCartItems = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -79,7 +70,6 @@ function Catalog() {
     }
   };
 
-  // Handler functions for sorting and searching
   const handleSort = (e) => {
     setSortOrder(e.target.value);
   };
@@ -88,7 +78,6 @@ function Catalog() {
     setSearchTerm(e.target.value);
   };
 
-  // Filter shoes based on search term
   const filteredShoes = sortedShoes.filter(shoe => 
     shoe.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -102,7 +91,6 @@ function Catalog() {
           <NavLink to='/login'>Login</NavLink>
         </div>
       </header>
-      {/* Render the cart dropdown */}
       <CartDropdown cartItems={cartItems} cartVisible={cartVisible} setCartVisible={setCartVisible} addToCart={addToCart} />
       <div className="shoes-container">
         <h1 className="title">Explore Our Collection</h1>

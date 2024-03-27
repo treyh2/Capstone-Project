@@ -11,7 +11,6 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Function to fetch cart items
     const fetchCartItems = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -26,11 +25,10 @@ const Checkout = () => {
       }
     };
 
-    fetchCartItems(); // Fetch cart items when the component mounts
+    fetchCartItems(); 
   }, []);
 
   useEffect(() => {
-    // Function to fetch order history
     const fetchOrderHistory = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -46,13 +44,11 @@ const Checkout = () => {
     };
 
     if (checkoutComplete) {
-      fetchOrderHistory(); // Fetch order history when checkout is complete
+      fetchOrderHistory(); 
     }
   }, [checkoutComplete]);
 
-  // Define a function to generate a random order number
   const generateRandomOrderNumber = () => {
-    // Generate a random number between 100000 and 999999
     return Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
   };
 
@@ -60,13 +56,10 @@ const Checkout = () => {
     try {
       const token = localStorage.getItem('token');
 
-      // Calculate total price from cartItems
       const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-      // Generate a random order number
       const orderNumber = generateRandomOrderNumber();
 
-      // Prepare order data to send to the server
       const orderData = {
         orderNumber: orderNumber,
         totalPrice: totalPrice,
@@ -74,13 +67,12 @@ const Checkout = () => {
           shoeId: item.id,
           name: item.name,
           price: item.price,
-          size: item.size, // Include shoe size
-          imageUrl: item.imageUrl, // Include image URL
+          size: item.size, 
+          imageUrl: item.imageUrl, 
           quantity: item.quantity
         }))
       };
 
-      // Send POST request to create the order
       const response = await axios.post('/api/orders', orderData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -93,12 +85,9 @@ const Checkout = () => {
         },
       });
 
-      console.log('Order placed successfully:', response.data);
-      // Optionally, you can navigate to a confirmation page or perform any other action upon successful order placement
       setCheckoutComplete(true);
     } catch (error) {
       console.error('Error placing order:', error);
-      console.log('Response data:', error.response.data);
     }
   };
 
@@ -131,7 +120,6 @@ const Checkout = () => {
         </div>
       ) : (
         <div className='cart-items'>
-          {/* Display cart items */}
           {cartItems.map(item => (
             <div key={item.id}>
               <p>{item.name} - ${item.price} - Size: {item.size} - Quantity: {item.quantity}

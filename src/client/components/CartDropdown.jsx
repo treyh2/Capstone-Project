@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
 import '../styles/CartDropdown.css';
 
 function CartDropdown({ cartVisible, setCartVisible }) {
@@ -8,7 +8,6 @@ function CartDropdown({ cartVisible, setCartVisible }) {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    // Fetch cart items on component mount
     fetchCartItems();
   }, []);
 
@@ -35,14 +34,12 @@ function CartDropdown({ cartVisible, setCartVisible }) {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          shoeId: shoeId, // Pass the correct shoeId to the backend
-          quantity: newQuantity // Use the newQuantity parameter
+          shoeId: shoeId,
+          quantity: newQuantity 
         })
       });
       
       if (response.ok) {
-        // Update the cart items state or trigger a fetch for updated cart items
-        console.log(`Added ${newQuantity} to item ${shoeId}`);
       } else {
         throw new Error('Failed to add quantity to item');
       }
@@ -50,10 +47,8 @@ function CartDropdown({ cartVisible, setCartVisible }) {
       console.error('Error adding quantity to item:', error);
     }
   };
-  
-  // Function to subtract an item from the cart
+
   const subtractFromCart = async (itemId) => {
-    // Implement subtractFromCart function if needed
   };
 
   const calculateTotalPrice = () => {
@@ -80,7 +75,6 @@ function CartDropdown({ cartVisible, setCartVisible }) {
             <img src={item.imageUrl} alt={item.name} style={{ maxWidth: '100px' }} />
             <p>${item.price}</p>
             <div className="quantity-controls">
-              {/* Implement subtract button */}
               <p>Quantity: {item.quantity}</p>
               <button onClick={() => addToQuantity(item.id, item.quantity + 1)}>+</button>
             </div>

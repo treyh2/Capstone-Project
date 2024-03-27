@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import CartDropdown from './CartDropdown'; // Import the cart dropdown component
+import CartDropdown from './CartDropdown'; 
 import '../styles/Home.css';
 
 function Home() {
-  // State variables
   const [cartItems, setCartItems] = useState([]);
-  const [cartVisible, setCartVisible] = useState(false); // Flag to toggle cart dropdown
-
-  // Fetch cart items on component mount
+  const [cartVisible, setCartVisible] = useState(false); 
   useEffect(() => {
     fetchCartItems();
   }, []);
 
-  // Fetch cart items
   const fetchCartItems = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -36,10 +32,8 @@ function Home() {
           <NavLink to='/'>Home</NavLink>
           <NavLink to='/catalog'>Catalog</NavLink>
           <NavLink to='/login'>Login</NavLink>
-          {/* Render the cart button */}
         </div>
       </header>
-      {/* Render the cart dropdown */}
       <CartDropdown cartItems={cartItems} cartVisible={cartVisible} setCartVisible={setCartVisible} />
       <div className="home-box">
         <img src="/kicks.jpeg" alt="kicks" className="home-image" />

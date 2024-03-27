@@ -21,10 +21,8 @@ apiRouter.use(async (req, res, next) => {
 
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-      console.log('decoded token:', decodedToken)
       
       req.user = decodedToken; 
-      console.log('req.user:', req.user); 
       
       next();
     } catch (error) {

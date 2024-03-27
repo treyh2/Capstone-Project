@@ -1,4 +1,3 @@
-/* Checkout.css */
 
 .checkout-container {
   font-family: 'Arial', sans-serif;
@@ -58,7 +57,6 @@
   margin-bottom: 10px;
 }
 
-/* Remove bullet points from unordered list */
 .order-history ul {
   list-style-type: none;
   padding-left: 0;
@@ -66,5 +64,5 @@
 }
 
 .order-history li {
-  margin-bottom: 30px; /* Adjust margin to add space between orders */
+  margin-bottom: 30px; 
 }

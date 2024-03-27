@@ -32,7 +32,6 @@ async function insertCart() {
       }
     }
     
-    console.log('Seeded cart successfully');
   } catch (error) {
     console.error('Error inserting seeded data', error);
   }
@@ -43,14 +42,12 @@ async function addToQuantity(userId, shoeId, quantity) {
       throw new Error('Invalid shoeId');
     }
 
-    // Check if the item already exists in the cart based on shoe_id
     const existingItem = await db.query(
       `SELECT * FROM cart WHERE user_id = $1 AND shoe_id = $2`,
       [userId, shoeId]
     );
 
     if (existingItem.rows.length > 0) {
-      // If the item exists, update the quantity by adding the specified quantity
       await db.query(
         `UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND shoe_id = $3 RETURNING *`,
         [quantity, userId, shoeId]
@@ -69,7 +66,6 @@ async function addToQuantity(userId, shoeId, quantity) {
 
 async function subtractFromCart(userId, itemId) {
   try {
-    // Remove the specified item from the cart
     await db.query(
       `DELETE FROM cart WHERE user_id = $1 AND id = $2`,
       [userId, itemId]
@@ -95,7 +91,6 @@ async function getCartItems(userId) {
 async function clearCart(userId) {
   try {
     await db.query(`DELETE FROM cart WHERE user_id = $1`, [userId]);
-    console.log('Cart cleared successfully');
   } catch (error) {
     console.error('Error clearing cart:', error);
     throw error;

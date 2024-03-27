@@ -72,7 +72,6 @@ async function getShoeById(shoeId) {
 async function insertShoeSize(shoeId, size) {
   try {
     await db.query('INSERT INTO shoe_sizes (shoe_id, size) VALUES ($1, $2)', [shoeId, size]);
-    console.log(`Inserted size ${size} for shoe ${shoeId}`);
   } catch (error) {
     console.error(`Error inserting shoe size for shoe ${shoeId}:`, error);
     throw error;

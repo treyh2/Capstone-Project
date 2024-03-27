@@ -50,9 +50,6 @@ function ShoeDetails({ token }) {
         size: selectedSize,
       };
   
-      // Make the API request to add the item to the cart
-      // Assuming it returns success if the item is added to the cart
-      // You should adjust this based on your actual backend implementation
       await axios.post('/api/cart/add', {
         shoe: shoeToAdd,
         quantity: 1,
@@ -62,7 +59,6 @@ function ShoeDetails({ token }) {
         }
       });
 
-      // Set success message
       setSuccessMessage('Item added to cart successfully!');
     } catch (error) {
       console.error('Error adding to cart:', error);

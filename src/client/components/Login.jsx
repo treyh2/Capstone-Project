@@ -6,7 +6,7 @@ const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // New state
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate(); 
 
   const handleEmailChange = (e) => {
@@ -32,9 +32,9 @@ const Login = ({ setToken }) => {
       setMessage(result.message);
       if (response.ok) {
         setToken(result.token);
-        setShowSuccessMessage(true); // Show success message
+        setShowSuccessMessage(true);
         setTimeout(() => {
-          setShowSuccessMessage(false); // Hide success message after 3 seconds
+          setShowSuccessMessage(false);
           navigate('/catalog');
         }, 3000);
       } else {

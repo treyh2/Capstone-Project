@@ -1,10 +1,7 @@
-// db/orders.js
-
 const db = require('./client');
 
 async function createOrder(userId, imageUrl, size, shoeId, name, price, quantity) {
   try {
-    // Generate a random order number
     const orderNumber = generateRandomOrderNumber();
 
     const { rows } = await db.query(
@@ -22,7 +19,6 @@ async function createOrder(userId, imageUrl, size, shoeId, name, price, quantity
 }
 
 function generateRandomOrderNumber() {
-  // Generate a random number between 100000 and 999999
   return Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
 }
 
