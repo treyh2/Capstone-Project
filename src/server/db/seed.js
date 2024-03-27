@@ -227,6 +227,8 @@ const createTables = async () => {
           order_number INTEGER UNIQUE NOT NULL,
           user_id INTEGER REFERENCES users(id),
           shoe_id INTEGER REFERENCES shoes(id),
+          "imageUrl" TEXT,
+          size DECIMAL (3, 1),
           name TEXT,
           price DECIMAL (10, 2),
           quantity INTEGER
@@ -308,8 +310,11 @@ async function insertOrders() {
     for (const order of orderData) {
       await createOrder(
         order.user_id,
+        order.order_number,
         order.shoeId,
         order.name,
+        order.size,
+        order.imageUrl,
         order.price,
         order.quantity
       );

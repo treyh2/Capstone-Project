@@ -27,6 +27,27 @@ const Checkout = () => {
     fetchCartItems(); // Fetch cart items when the component mounts
   }, []);
 
+  useEffect(() => {
+    // Function to fetch order history
+    const fetchOrderHistory = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/api/orders', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching order history:', error);
+      }
+    };
+
+    if (checkoutComplete) {
+      fetchOrderHistory(); // Fetch order history when checkout is complete
+    }
+  }, [checkoutComplete]);
+
   // Define a function to generate a random order number
   const generateRandomOrderNumber = () => {
     // Generate a random number between 100000 and 999999
@@ -51,6 +72,8 @@ const Checkout = () => {
           shoeId: item.id,
           name: item.name,
           price: item.price,
+          size: item.size, // Include shoe size
+          imageUrl: item.imageUrl, // Include image URL
           quantity: item.quantity
         }))
       };
@@ -62,15 +85,6 @@ const Checkout = () => {
         },
       });
 
-      // Fetch orders after placing the order successfully
-      const ordersResponse = await axios.get('/api/orders', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setOrders(ordersResponse.data);
-
-      // Clear user's cart
       await axios.post('/api/cart/clear', {}, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -95,7 +109,11 @@ const Checkout = () => {
           <h3>Order History</h3>
           <ul>
             {orders.map(order => (
-              <li key={order.id}>{order.name} - ${order.totalPrice}</li>
+              <li key={order.id}>
+                {order.name} - ${order.price} - Size: {order.size} - Order Number: {order.order_number}
+                <br />
+                <img src={order.imageUrl} alt={order.name} style={{ maxWidth: '100px' }} />
+              </li>
             ))}
           </ul>
         </div>
@@ -104,7 +122,7 @@ const Checkout = () => {
           {/* Display cart items */}
           {cartItems.map(item => (
             <div key={item.id}>
-              <p>{item.name} - ${item.price} - Quantity: {item.quantity}</p>
+              <p>{item.name} - ${item.price} - Size: {item.size} - Quantity: {item.quantity}</p>
             </div>
           ))}
           <button onClick={handleCheckout}>Checkout</button>

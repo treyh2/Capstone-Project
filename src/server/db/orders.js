@@ -2,16 +2,16 @@
 
 const db = require('./client');
 
-async function createOrder(userId, shoeId, name, price, quantity) {
+async function createOrder(userId, imageUrl, size, shoeId, name, price, quantity) {
   try {
     // Generate a random order number
     const orderNumber = generateRandomOrderNumber();
 
     const { rows } = await db.query(
-      `INSERT INTO orders (order_number, user_id, shoe_id, name, price, quantity) 
-       VALUES ($1, $2, $3, $4, $5, $6) 
+      `INSERT INTO orders (order_number, user_id, "imageUrl", size, shoe_id, name, price, quantity) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
        RETURNING *;`,
-      [orderNumber, userId, shoeId, name, price, quantity]
+      [orderNumber, userId, imageUrl, size, shoeId, name, price, quantity]
     );
 
     return rows[0];

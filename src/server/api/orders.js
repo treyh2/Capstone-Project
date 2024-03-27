@@ -14,8 +14,8 @@ ordersRouter.post('/', async (req, res, next) => {
 
     // Create each item in the order in the database
     const orderPromises = items.map(async (item) => {
-      const { shoeId, name, price, quantity } = item;
-      const order = await createOrder(req.user.id, shoeId, name, price, quantity);
+      const { imageUrl, size, shoeId, name, price, quantity } = item;
+      const order = await createOrder(req.user.id, imageUrl, size, shoeId, name, price, quantity);
       return order;
     });
 
