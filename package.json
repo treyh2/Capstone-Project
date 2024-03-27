@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "nodemon src/server/main.js -w src/server",
-    "start": "set NODE_ENV=production node src/server/main.js",
+    "start": "NODE_ENV=production node src/server/main.js",
     "seed": "node ./src/server/db/seed.js",
     "build": "vite build"
   },
@@ -31,6 +31,6 @@
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.0.1",
     "nodemon": "^2.0.20",
-    "vite": "^4.0.4"
+    "vite": "^4.5.3"
   }
 }
