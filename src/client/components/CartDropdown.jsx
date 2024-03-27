@@ -31,7 +31,6 @@ function CartDropdown({ cartItems, cartVisible, setCartVisible, addToCart }) {
             <img src={item.imageUrl} alt={item.name} style={{ maxWidth: '100px' }}/>
             <p>${item.price}</p>
             <p>Quantity: {item.quantity}</p>
-
           </div>
         ))}
         <p>Total Price: ${calculateTotalPrice().toFixed(2)}</p> {/* Display total price */}

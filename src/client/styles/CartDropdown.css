@@ -1,8 +1,19 @@
 .cart-container {
-  position: fixed;
-  top: 100px; /* Adjust this value to position the dropdown below the navbar */
-  left: 40px; /* Adjust this value to position the dropdown to the left */
+  position: absolute;
+  top: 125px; /* Adjust this value to position the dropdown below the navbar */
+  left: 50px; /* Adjust this value to position the dropdown to the left */
   z-index: 1000;
+}
+
+.cart-icon {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #333; /* Set background color of the cart button */
+  color: #fff; /* Set text color */
+  border: none;
+  border-radius: 5px;
+  padding: 15px; /* Increase padding to make the button bigger */
+  font-size: 18px; /* Increase font size */
+  cursor: pointer;
 }
 
 .cart-content {
@@ -10,9 +21,28 @@
   background-color: white;
   padding: 10px;
   display: none;
-  width: 200px;
+  width: 250px;
+  max-height: 300px; /* Set maximum height */
+  overflow-y: auto; /* Add overflow-y property */
+  font-family: 'Arial', sans-serif; /* Set font family for text */
 }
 
 .cart-container.cart-visible .cart-content {
   display: block;
+}
+
+.checkout-button {
+  background-color: #333; /* Set background color */
+  color: #fff; /* Set text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px; /* Add margin to separate from other content */
+  cursor: pointer;
+}
+
+.cart-item {
+  border-bottom: 3px solid #333; /* Add border between items */
+  padding-bottom: 10px; /* Add padding between items */
+  margin-bottom: 10px; /* Add margin between items */
 }
