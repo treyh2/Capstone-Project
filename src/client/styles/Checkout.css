@@ -1,0 +1,70 @@
+/* Checkout.css */
+
+.checkout-container {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.order-history {
+  margin-top: 20px;
+}
+
+.order-history h3 {
+  margin-bottom: 10px;
+}
+
+.cart-items {
+  margin-top: 20px;
+}
+
+.cart-items button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-items button:hover {
+  background-color: #555;
+}
+
+.cart-items p {
+  margin-bottom: 10px;
+}
+
+/* Remove bullet points from unordered list */
+.order-history ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+.order-history li {
+  margin-bottom: 30px; /* Adjust margin to add space between orders */
+}

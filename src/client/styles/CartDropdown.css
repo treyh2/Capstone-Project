@@ -1,7 +1,7 @@
 .cart-container {
   position: fixed;
-  top: 125px; /* Adjust this value to position the dropdown below the navbar */
-  left: 50px; /* Adjust this value to position the dropdown to the left */
+  top: 100px; /* Adjust this value to position the dropdown below the navbar */
+  left: 40px; /* Adjust this value to position the dropdown to the left */
   z-index: 1000;
 }
 

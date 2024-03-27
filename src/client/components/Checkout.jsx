@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import "../styles/Checkout.css"
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -102,15 +104,25 @@ const Checkout = () => {
 
   return (
     <div>
-      <h2>Checkout</h2>
+      <div className="checkout-container">
+      <header className="header">
+        <div className="navbar">
+          <NavLink to='/'>Home</NavLink>
+          <NavLink to='/catalog'>Catalog</NavLink>
+          <NavLink to='/login'>Login</NavLink>
+        </div>
+      </header>
+      <h2 className='checkout-header'>Checkout</h2>
       {checkoutComplete ? (
-        <div>
+        <div className='order-history'>
           <p>Order successfully placed!</p>
           <h3>Order History</h3>
           <ul>
             {orders.map(order => (
               <li key={order.id}>
-                {order.name} - ${order.price} - Size: {order.size} - Order Number: {order.order_number}
+                Order Number: {order.order_number}
+                <br />
+                {order.name} - ${order.price} - Size: {order.size} 
                 <br />
                 <img src={order.imageUrl} alt={order.name} style={{ maxWidth: '100px' }} />
               </li>
@@ -118,16 +130,20 @@ const Checkout = () => {
           </ul>
         </div>
       ) : (
-        <div>
+        <div className='cart-items'>
           {/* Display cart items */}
           {cartItems.map(item => (
             <div key={item.id}>
-              <p>{item.name} - ${item.price} - Size: {item.size} - Quantity: {item.quantity}</p>
+              <p>{item.name} - ${item.price} - Size: {item.size} - Quantity: {item.quantity}
+              <br />
+              <img src={item.imageUrl} alt={item.name} style={{ maxWidth: '100px' }} />
+              </p>
             </div>
           ))}
           <button onClick={handleCheckout}>Checkout</button>
         </div>
       )}
+    </div>
     </div>
   );
 };

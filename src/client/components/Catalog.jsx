@@ -130,7 +130,6 @@ function Catalog() {
                 <div className="shoe-info">
                   <h2 className="shoe-name">{shoe.name}</h2>
                   <p className="shoe-price">${shoe.price}</p>
-                  <button onClick={() => addToCart(shoe.id)}>Add to Cart</button>
                 </div>
               </Link>
             </div>
