@@ -291,7 +291,7 @@ const insertShoes = async () => {
 
 async function insertCart() {
   try {
-    const cartItems = [{ user_id: 1, shoeId: 1, name: 'Jordan 11 Retro Low Concord Bred', imageUrl: 'https://example.com/image1.jpg', size: 10, price: 280, quantity: 1 }];
+    const cartItems = [];
     for (const item of cartItems) {
       await addToCart(item.user_id, item.shoeId, item.name, item.imageUrl, item.size, item.price, item.quantity);
     }
@@ -303,10 +303,7 @@ async function insertCart() {
 
 async function insertOrders() {
   try {
-    const orderData = [
-      { user_id: 1, shoeId: 1, name: 'Jordan 11 Retro Low Concord Bred', price: 280, quantity: 1 },
-      // Add more order data as needed
-    ];
+    const orderData = [];
 
     for (const order of orderData) {
       await createOrder(
