@@ -7,9 +7,9 @@ import Login from './components/Login';
 import Home from './components/Home';
 import ShoeDetails from './components/ShoeDetails';
 import Register from './components/Register';
-import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import './style.css';
+import CartDropdown from './components/CartDropdown';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
@@ -56,7 +56,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/shoe/:name' element={<ShoeDetails token={token} />} />
         <Route path='/checkout' element={<Checkout />} />
-        <Route path='/cart' element={<Cart currentUser={currentUser} />} />
+        <Route path='/cart' element={<CartDropdown currentUser={currentUser} />} />
       </Routes>
     </>
   );
