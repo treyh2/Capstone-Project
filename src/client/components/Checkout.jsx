@@ -59,7 +59,14 @@ const Checkout = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+      
+      // Clear user's cart
+    await axios.post('/api/cart/clear', {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
       console.log('Order placed successfully:', response.data);
       // Optionally, you can navigate to a confirmation page or perform any other action upon successful order placement
     } catch (error) {

@@ -51,6 +51,14 @@ async function getCartItems(userId) {
   }
 }
 
+async function clearCart(userId) {
+  try {
+    await db.query(`DELETE FROM cart WHERE user_id = $1`, [userId]);
+    console.log('Cart cleared successfully');
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+    throw error;
+  }
+}
 
-
-module.exports = { addToCart, insertCart, getCartItems };
+module.exports = { addToCart, insertCart, getCartItems, clearCart };

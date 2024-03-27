@@ -1,6 +1,6 @@
 const express = require('express');
 const cartRouter = express.Router();
-const { addToCart, getCartItems } = require('../db/cart');
+const { addToCart, getCartItems, clearCart } = require('../db/cart');
 
 cartRouter.post('/add', async (req, res, next) => {
   try {
@@ -33,5 +33,15 @@ cartRouter.get('/', async (req, res, next) => {
   }
 });
 
+cartRouter.post('/clear', async (req, res, next) => {
+  const userId = req.user.id; // Assuming user information is available in the request
+  try {
+    await clearCart(userId);
+    res.status(200).json({ message: 'Cart cleared successfully' });
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 module.exports = cartRouter;
