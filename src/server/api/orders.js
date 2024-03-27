@@ -1,6 +1,6 @@
 const express = require('express');
 const ordersRouter = express.Router();
-const { createOrder } = require('../db/orders');
+const { createOrder, getOrders } = require('../db/orders');
 
 // Endpoint to create a new order
 ordersRouter.post('/', async (req, res, next) => {
@@ -30,6 +30,18 @@ ordersRouter.post('/', async (req, res, next) => {
   }
 });
 
+// Endpoint to fetch orders
+ordersRouter.get('/', async (req, res, next) => {
+  try {
+    // Fetch orders for the authenticated user
+    const userId = req.user.id; // Assuming user information is available in the request
+    const orders = await getOrders(userId);
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 module.exports = ordersRouter;
 

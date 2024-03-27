@@ -26,4 +26,17 @@ function generateRandomOrderNumber() {
   return Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
 }
 
-module.exports = { createOrder };
+async function getOrders(userId) {
+  try {
+    const { rows } = await db.query(`
+      SELECT * FROM orders
+      WHERE user_id = $1
+    `, [userId]);
+    return rows;
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    throw error;
+  }
+}
+
+module.exports = { createOrder, getOrders };
