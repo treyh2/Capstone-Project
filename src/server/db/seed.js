@@ -1,7 +1,8 @@
 const db = require('./client');
 const { createUser, addToUserCart } = require('./users');
 const { createShoe, insertShoeSize } = require('./shoes');
-const { addToCart } = require('./cart')
+const { addToCart } = require('./cart');
+const { createOrder } = require('./orders');
 
 
 const users = [
@@ -171,6 +172,9 @@ const dropTables = async () => {
       await db.query(`
           DROP TABLE IF EXISTS shoes CASCADE; 
       `);
+      await db.query(`
+          DROP TABLE IF EXISTS orders CASCADE; 
+      `);
   } catch(err) {
       throw err;
   }
@@ -214,6 +218,16 @@ const createTables = async () => {
           name TEXT,
           "imageUrl" TEXT,
           size DECIMAL (3, 1),
+          price DECIMAL (10, 2),
+          quantity INTEGER
+        )`);
+        await db.query(`
+        CREATE TABLE orders (
+          id SERIAL PRIMARY KEY,
+          order_number INTEGER UNIQUE NOT NULL,
+          user_id INTEGER REFERENCES users(id),
+          shoe_id INTEGER REFERENCES shoes(id),
+          name TEXT,
           price DECIMAL (10, 2),
           quantity INTEGER
         )`);
@@ -287,6 +301,29 @@ async function insertCart() {
   }
 }
 
+async function insertOrders() {
+  try {
+    const orderData = [
+      { user_id: 1, shoeId: 1, name: 'Jordan 11 Retro Low Concord Bred', price: 280, quantity: 1 },
+      // Add more order data as needed
+    ];
+
+    for (const order of orderData) {
+      await createOrder(
+        order.user_id,
+        order.shoeId,
+        order.name,
+        order.price,
+        order.quantity
+      );
+    }
+    console.log('Seeded orders successfully');
+  } catch (error) {
+    console.error('Error inserting seeded orders', error);
+  }
+}
+
+
 const seedDatabase = async () => {
   try {
       await db.connect();
@@ -295,6 +332,7 @@ const seedDatabase = async () => {
       await insertUsers();
       await insertShoes();
       await insertCart();
+      await insertOrders();
   }
   
   catch (err) {

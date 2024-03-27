@@ -5,7 +5,8 @@ const volleyball = require('volleyball');
 
 const usersRouter = require('./users');
 const shoesRouter = require('./shoes');
-const cartRouter = require('./cart')
+const cartRouter = require('./cart');
+const ordersRouter = require('./orders');
 
 apiRouter.use(volleyball);
 
@@ -42,6 +43,7 @@ apiRouter.use(async (req, res, next) => {
 apiRouter.use('/users', usersRouter);
 apiRouter.use('/shoes', shoesRouter);
 apiRouter.use('/cart', cartRouter);
+apiRouter.use('/orders', ordersRouter);
 
 apiRouter.use((err, req, res, next) => {
   res.status(500).send(err);

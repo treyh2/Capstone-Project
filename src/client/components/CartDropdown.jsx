@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import '../styles/CartDropdown.css'; // Import CSS for CartDropdown styling
 
 function CartDropdown({ cartItems, cartVisible, setCartVisible, addToCart }) {
+  const navigate = useNavigate(); // Initialize navigate
 
   // Function to calculate total price
   const calculateTotalPrice = () => {
@@ -10,6 +12,11 @@ function CartDropdown({ cartItems, cartVisible, setCartVisible, addToCart }) {
       totalPrice += item.price * item.quantity;
     });
     return totalPrice;
+  };
+
+  const handleCheckout = () => {
+    // Redirect to checkout page
+    navigate('/checkout');
   };
 
   return (
@@ -25,12 +32,12 @@ function CartDropdown({ cartItems, cartVisible, setCartVisible, addToCart }) {
           </div>
         ))}
         <p>Total Price: ${calculateTotalPrice().toFixed(2)}</p> {/* Display total price */}
-        <button className="checkout-button" onClick={() => console.log("Redirect to checkout")}>
+        <button className="checkout-button" onClick={handleCheckout}>
           Checkout
         </button>
       </div>
     </div>
   );
 }
-
+ 
 export default CartDropdown;
