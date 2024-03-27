@@ -6,8 +6,7 @@
     "dev": "nodemon src/server/main.js -w src/server",
     "start": "NODE_ENV=production node src/server/main.js",
     "seed": "node ./src/server/db/seed.js",
-    "build": "vite build",
-    "preinstall": "npm install -g vite"
+    "build": "vite build"
   },
   "dependencies": {
     "aws-sdk": "^2.1578.0",
