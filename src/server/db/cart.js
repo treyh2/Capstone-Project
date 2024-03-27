@@ -37,33 +37,35 @@ async function insertCart() {
     console.error('Error inserting seeded data', error);
   }
 }
-
 async function addToQuantity(userId, shoeId, quantity) {
   try {
-    // Check if the item already exists in the cart
+    if (!shoeId) {
+      throw new Error('Invalid shoeId');
+    }
+
+    // Check if the item already exists in the cart based on shoe_id
     const existingItem = await db.query(
       `SELECT * FROM cart WHERE user_id = $1 AND shoe_id = $2`,
       [userId, shoeId]
     );
 
     if (existingItem.rows.length > 0) {
-      // If the item exists, update the quantity
+      // If the item exists, update the quantity by adding the specified quantity
       await db.query(
-        `UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND shoe_id = $3`,
+        `UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND shoe_id = $3 RETURNING *`,
         [quantity, userId, shoeId]
       );
+      return { message: 'Quantity added successfully' };
     } else {
-      // If the item does not exist, insert it into the cart
-      await db.query(
-        `INSERT INTO cart (user_id, shoe_id, quantity) VALUES ($1, $2, $3)`,
-        [userId, shoeId, quantity]
-      );
+      console.error(`Item with shoe_id ${shoeId} does not exist in the cart for user ${userId}`);
+      throw new Error('Item does not exist in the cart');
     }
   } catch (error) {
-    console.error('Error adding item to cart:', error);
+    console.error('Error adding quantity to item:', error);
     throw error;
   }
 }
+
 
 async function subtractFromCart(userId, itemId) {
   try {
@@ -77,8 +79,6 @@ async function subtractFromCart(userId, itemId) {
     throw error;
   }
 }
-
-
 async function getCartItems(userId) {
   try {
     const { rows } = await db.query(`

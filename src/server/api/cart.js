@@ -21,7 +21,7 @@ cartRouter.post('/add', async (req, res, next) => {
   }
 });
 
-cartRouter.post('/quantity-add', async (req, res, next) => {
+cartRouter.patch('/quantity-add', async (req, res, next) => {
   try {
     const { shoeId, quantity } = req.body;
     await addToQuantity(req.user.id, shoeId, quantity);
@@ -32,7 +32,7 @@ cartRouter.post('/quantity-add', async (req, res, next) => {
   }
 });
 
-cartRouter.post('/subtract', async (req, res, next) => {
+cartRouter.patch('/subtract', async (req, res, next) => {
   try {
     const { itemId } = req.body;
     await subtractFromCart(req.user.id, itemId);
