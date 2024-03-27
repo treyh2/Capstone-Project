@@ -1,6 +1,6 @@
 const express = require('express');
 const cartRouter = express.Router();
-const { addToCart, getCartItems, clearCart } = require('../db/cart');
+const { addToCart, getCartItems, clearCart, subtractFromCart, addToQuantity } = require('../db/cart');
 
 cartRouter.post('/add', async (req, res, next) => {
   try {
@@ -17,6 +17,28 @@ cartRouter.post('/add', async (req, res, next) => {
     res.status(201).json({ message: 'Item added to cart successfully' });
   } catch (error) {
     console.error('Error adding item to cart:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+cartRouter.post('/quantity-add', async (req, res, next) => {
+  try {
+    const { shoeId, quantity } = req.body;
+    await addToQuantity(req.user.id, shoeId, quantity);
+    res.status(201).json({ message: 'Quantity added successfully' });
+  } catch (error) {
+    console.error('Error adding quantity:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+cartRouter.post('/subtract', async (req, res, next) => {
+  try {
+    const { itemId } = req.body;
+    await subtractFromCart(req.user.id, itemId);
+    res.status(200).json({ message: 'Item subtracted successfully' });
+  } catch (error) {
+    console.error('Error subtracting item:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
