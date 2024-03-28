@@ -25,7 +25,7 @@ function CartDropdown({ cartVisible, setCartVisible }) {
     }
   };
 
-  const addToQuantity = async (shoeId, newQuantity) => {
+  const addToQuantity = async (shoeId, newQuantity) => { // broken
     try {
       const response = await fetch(`/api/cart/quantity-add`, {
         method: 'PATCH',
@@ -48,7 +48,7 @@ function CartDropdown({ cartVisible, setCartVisible }) {
     }
   };
 
-  const subtractFromCart = async (itemId) => {
+  const subtractFromCart = async (itemId) => { //broken
   };
 
   const calculateTotalPrice = () => {

@@ -1,6 +1,6 @@
 const db = require('./client');
 
-async function getAllShoes() {
+async function getAllShoes() { // use to fetch all the shoes from the database 
   try {
     const shoesQuery = 'SELECT * FROM shoes';
     const sizesQuery = 'SELECT size FROM shoe_sizes WHERE shoe_id = $1';
@@ -40,7 +40,7 @@ async function getShoeByName(name) {
   }
 }
 
-async function createShoe(shoe) {
+async function createShoe(shoe) { //adding shoe to shoes table with values
   try {
     const { rows } = await db.query(
       `INSERT INTO shoes (name, brand, "imageUrl", price) 
@@ -56,9 +56,9 @@ async function createShoe(shoe) {
   }
 }
 
-async function getShoeById(shoeId) {
+async function getShoeById(shoeId) { // getting shoe value when nav to shoedetails
   try {
-    const { rows } = await db.query('SELECT * FROM shoes WHERE id = $1', [shoeId]);
+    const { rows } = await db.query('SELECT * FROM shoes WHERE id = $1', [shoeId]); 
     if (rows.length === 0) {
       throw new Error('Shoe not found');
     }
@@ -69,7 +69,7 @@ async function getShoeById(shoeId) {
   }
 }
 
-async function insertShoeSize(shoeId, size) {
+async function insertShoeSize(shoeId, size) { //when selecting shoe size, adds to cart and insert shoe size into shoe
   try {
     await db.query('INSERT INTO shoe_sizes (shoe_id, size) VALUES ($1, $2)', [shoeId, size]);
   } catch (error) {

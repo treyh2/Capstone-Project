@@ -2,7 +2,7 @@ const db = require('./client');
 const { getShoeById } = require('./shoes');
 const { addToUserCart } = require('./users')
 
-async function addToCart(userId, shoeId, name, imageUrl, size, price, quantity) {
+async function addToCart(userId, shoeId, name, imageUrl, size, price, quantity) { // adding item to cart 
   try {
     const { rows } = await db.query(
       `INSERT INTO cart (user_id, shoe_id, name, "imageUrl", size, price, quantity) 
@@ -18,7 +18,7 @@ async function addToCart(userId, shoeId, name, imageUrl, size, price, quantity) 
   }
 }
 
-async function insertCart() {
+async function insertCart() { //adds shoe and shoe values into current user cart
   try {
     const allUsers = await addToUserCart();
 
@@ -36,7 +36,7 @@ async function insertCart() {
     console.error('Error inserting seeded data', error);
   }
 }
-async function addToQuantity(userId, shoeId, quantity) {
+async function addToQuantity(userId, shoeId, quantity) { // broken
   try {
     if (!shoeId) {
       throw new Error('Invalid shoeId');
@@ -64,7 +64,7 @@ async function addToQuantity(userId, shoeId, quantity) {
 }
 
 
-async function subtractFromCart(userId, itemId) {
+async function subtractFromCart(userId, itemId) { // broken
   try {
     await db.query(
       `DELETE FROM cart WHERE user_id = $1 AND id = $2`,
@@ -75,7 +75,7 @@ async function subtractFromCart(userId, itemId) {
     throw error;
   }
 }
-async function getCartItems(userId) {
+async function getCartItems(userId) { //gets the items from the current user cart
   try {
     const { rows } = await db.query(`
       SELECT * FROM cart
@@ -88,7 +88,7 @@ async function getCartItems(userId) {
   }
 }
 
-async function clearCart(userId) {
+async function clearCart(userId) { // clears cart after user checksout
   try {
     await db.query(`DELETE FROM cart WHERE user_id = $1`, [userId]);
   } catch (error) {

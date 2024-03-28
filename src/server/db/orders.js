@@ -1,6 +1,6 @@
 const db = require('./client');
 
-async function createOrder(userId, imageUrl, size, shoeId, name, price, quantity) {
+async function createOrder(userId, imageUrl, size, shoeId, name, price, quantity) { // create a new order for the user
   try {
     const orderNumber = generateRandomOrderNumber();
 
@@ -22,7 +22,7 @@ function generateRandomOrderNumber() {
   return Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
 }
 
-async function getOrders(userId) {
+async function getOrders(userId) { // getOrders for the order history
   try {
     const { rows } = await db.query(`
       SELECT * FROM orders

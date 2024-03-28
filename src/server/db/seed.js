@@ -6,17 +6,6 @@ const { createOrder } = require('./orders');
 
 
 const users = [
-  {
-    firstname: 'Emily',
-    lastname: 'Johnson',
-    email: 'emily@example.com',
-    password: 'securepass',
-    address: '123 Home',
-    city: 'Detroit',
-    state: 'Michigan',
-    zipcode: '12345',
-    cartItems: [], 
-  }
 ];
 
 const shoes = [
